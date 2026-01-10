@@ -24,6 +24,7 @@ class GameEngine extends Component
     public $gameState = 'waiting'; // waiting, playing, won, lost
     public $stars = 0;
     public $hint = null;
+    public $startTime;
     public $names = ['C' => 'Do', 'D' => 'Re', 'E' => 'Mi', 'F' => 'Fa', 'G' => 'Sol', 'A' => 'La', 'B' => 'Si'];
 
     /**
@@ -70,6 +71,7 @@ class GameEngine extends Component
     public function startGame()
     {
         $this->gameState = 'playing';
+        $this->startTime = microtime(true);
     }
 
     /**
@@ -145,6 +147,15 @@ class GameEngine extends Component
             $this->hint = null;
             $this->lives--;
             $this->dispatch('playErrorSound');
+
+            // Seguimiento pedagógico: Registrar el error
+            \App\Models\GameLog::create([
+                'player_id' => $this->player->id,
+                'world' => $this->world,
+                'level' => $this->level,
+                'event_type' => 'error',
+                'data' => ['pitch' => $this->notes[$this->currentIndex]['pitch']]
+            ]);
             
             if ($this->lives <= 0) {
                 $this->gameState = 'lost';
@@ -165,6 +176,16 @@ class GameEngine extends Component
             2 => 2,
             default => 1,
         };
+
+        // Registro pedagógico: Nivel completado y duración
+        $duration = round(microtime(true) - ($this->startTime ?? microtime(true)));
+        \App\Models\GameLog::create([
+            'player_id' => $this->player->id,
+            'world' => $this->world,
+            'level' => $this->level,
+            'event_type' => 'level_complete',
+            'data' => ['duration' => $duration]
+        ]);
 
         $gameService = new GameService();
         $gameService->completeLevel($this->player, $this->world, $this->level, $this->stars);

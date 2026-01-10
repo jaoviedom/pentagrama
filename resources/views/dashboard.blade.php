@@ -69,6 +69,11 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sección de Seguimiento Pedagógico (Analytics) -->
+            <div class="mt-12">
+                @livewire('teacher.analytics-dashboard')
+            </div>
         </main>
     </div>
 </x-layouts.app>

@@ -1,11 +1,14 @@
 <x-layouts.app title="Seleccionar Jugador - Pentagrama">
     <div class="min-h-screen p-8 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
-        <!-- Botón de Cerrar Sesión (Padres/Profesores) -->
-        <div class="max-w-7xl mx-auto flex justify-end mb-8">
+        <!-- Botones de Gestión (Padres/Profesores) -->
+        <div class="max-w-7xl mx-auto flex justify-between mb-8">
+            <a href="{{ route('dashboard') }}" class="bg-white/80 hover:bg-white text-purple-600 px-6 py-2 rounded-2xl font-black transition-all border-b-4 border-purple-300 active:border-b-0 active:translate-y-1 flex items-center gap-2">
+                📊 Panel de Control
+            </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="bg-white/50 hover:bg-white text-gray-600 px-6 py-2 rounded-2xl font-bold transition-all border-b-4 border-gray-300 active:border-b-0 active:translate-y-1">
-                    🔒 Salir (Padres)
+                    🔒 Salir
                 </button>
             </form>
         </div>
