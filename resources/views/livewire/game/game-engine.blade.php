@@ -82,8 +82,8 @@
 
                     @foreach($displayNotes as $p)
                         <button wire:click="submitNote('{{ $p }}')" 
-                            class="group bg-white hover:bg-yellow-50 p-8 rounded-[2.5rem] shadow-xl border-b-8 border-gray-200 transition-all hover:-translate-y-2 active:translate-y-2 active:border-b-0">
-                            <span class="block text-4xl md:text-5xl font-black text-purple-600 group-hover:scale-110 transition-transform">
+                            class="group bg-white hover:bg-yellow-50 p-8 rounded-[2.5rem] shadow-xl border-b-8 border-gray-200 transition-all hover:-translate-y-2 active:translate-y-2 active:border-b-0 flex items-center justify-center">
+                            <span class="text-4xl md:text-5xl font-black text-purple-600 group-hover:scale-110 transition-transform">
                                 {{ $names[substr($p, 0, 1)] }}
                             </span>
                         </button>

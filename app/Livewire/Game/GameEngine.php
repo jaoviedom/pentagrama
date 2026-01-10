@@ -116,6 +116,12 @@ class GameEngine extends Component
         // Guardar progreso automáticamente
         $gameService = new GameService();
         $gameService->completeLevel($this->player, $this->world, $this->level, $this->stars);
+
+        // Verificar recompensas
+        $rewardCode = $gameService->checkRewards($this->player, $this->world, $this->level);
+        if ($rewardCode) {
+            $this->dispatch('show-reward', rewardCode: $rewardCode);
+        }
     }
 
     public function retry()

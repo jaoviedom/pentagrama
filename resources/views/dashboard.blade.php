@@ -55,11 +55,11 @@
                 </div>
 
                     <!-- Card 3 -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform">
-                        <div class="text-5xl mb-4">⭐</div>
+                    <a href="{{ route('game.trophies') }}" class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform group">
+                        <div class="text-5xl mb-4 group-hover:rotate-12 transition-transform">⭐</div>
                         <h3 class="text-2xl font-bold mb-2">Mis Logros</h3>
                         <p class="text-blue-100">Mira todo lo que has conseguido</p>
-                    </div>
+                    </a>
 
                     <!-- Card 4 -->
                     <div class="bg-gradient-to-br from-green-400 to-green-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform">

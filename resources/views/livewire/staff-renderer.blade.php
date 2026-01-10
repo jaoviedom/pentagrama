@@ -10,9 +10,11 @@
 
         {{-- Clave Musical (Posicionamiento Técnico Real) --}}
         @if($clef === 'sol')
-            <text x="10" y="88" style="font-size: 115px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄞</text>
+            {{-- Centrada en la 2da línea del pentagrama (Sol) --}}
+            <text x="10" y="88" style="font-size: 150px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄞</text>
         @else
-            <text x="10" y="62" style="font-size: 90px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
+            {{-- Centrada en la 4ta línea del pentagrama (Fa) --}}
+            <text x="10" y="55" style="font-size: 125px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
         @endif
 
         {{-- Líneas Principales del Pentagrama --}}

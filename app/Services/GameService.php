@@ -29,15 +29,23 @@ class GameService
     public function getPlayerProgress(Player $player, string $worldCode)
     {
         $levelsConfig = self::WORLDS[$worldCode]['levels'];
-        $progress = $player->progress()->where('world', $worldCode)->get()->keyBy('level');
+        // Excluimos niveles especiales (>= 90) de la progresión del mapa
+        $progress = $player->progress()
+            ->where('world', $worldCode)
+            ->where('level', '<', 90)
+            ->get()
+            ->keyBy('level');
         
         $map = [];
         $unlockedUntil = 1;
 
-        // Encontrar el último nivel completado para determinar qué está desbloqueado
-        foreach ($progress as $p) {
-            if ($p->is_completed) {
-                $unlockedUntil = max($unlockedUntil, $p->level + 1);
+        // Progresión secuencial estricta: desbloquea el siguiente solo si el actual está listo
+        for ($i = 1; $i <= $levelsConfig; $i++) {
+            $p = $progress->get($i);
+            if ($p && $p->is_completed) {
+                $unlockedUntil = $i + 1;
+            } else {
+                break;
             }
         }
 
@@ -70,11 +78,58 @@ class GameService
     }
 
     /**
+     * Verificar si el jugador ha ganado una nueva recompensa
+     */
+    public function checkRewards(Player $player, string $world, int $level): ?string
+    {
+        $newRewardCode = null;
+
+        // 1. Hitos por niveles específicos
+        if ($level == 10) $newRewardCode = 'level_10';
+        if ($level == 20) $newRewardCode = 'level_20';
+        if ($level == 30) $newRewardCode = 'level_30';
+
+        // 2. Mundo completado (nivel 40)
+        if ($level == self::WORLDS[$world]['levels']) {
+            $newRewardCode = "world_{$world}_complete";
+        }
+
+        if ($newRewardCode) {
+            $reward = \App\Models\Reward::where('code', $newRewardCode)->first();
+            
+            // Verificar si ya la tiene
+            if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
+                $player->rewards()->attach($reward->id, ['earned_at' => now()]);
+                return $newRewardCode;
+            }
+        }
+
+        // 3. Recompensas aleatorias (personajes/instrumentos) con baja probabilidad
+        if (rand(1, 100) <= 10) { // 10% de probabilidad
+            $randomType = rand(0, 1) ? 'character' : 'instrument';
+            $randomReward = \App\Models\Reward::where('type', $randomType)
+                ->whereDoesntHave('players', fn($q) => $q->where('player_id', $player->id))
+                ->inRandomOrder()
+                ->first();
+
+            if ($randomReward) {
+                $player->rewards()->attach($randomReward->id, ['earned_at' => now()]);
+                return $randomReward->code;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Obtener el último nivel jugado para sugerir continuar
      */
     public function getLastPlayedLevel(Player $player)
     {
-        return $player->progress()->orderBy('updated_at', 'desc')->first();
+        return $player->progress()
+            ->where('level', '<', 90) // Ignora retos y niveles especiales
+            ->orderBy('updated_at', 'desc')
+            ->first();
     }
 
     /**

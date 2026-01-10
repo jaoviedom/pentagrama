@@ -38,7 +38,8 @@
                     <div class="mb-10 transform hover:scale-[1.02] transition-transform">
                         @livewire('staff-renderer', [
                             'clef' => $world, 
-                            'activeNotes' => $currentChallenge['notes']
+                            'activeNotes' => $currentChallenge['notes'],
+                            'showNames' => false,
                         ])
                     </div>
 
@@ -54,7 +55,7 @@
                         @foreach($currentChallenge['options'] as $option)
                             <button wire:click="checkAnswer('{{ $option }}')" 
                                 {{ $feedback ? 'disabled' : '' }}
-                                class="bg-slate-50 hover:bg-blue-500 hover:text-white p-6 rounded-[2rem] text-2xl font-black text-slate-600 transition-all transform hover:-translate-y-2 active:translate-y-1 border-b-8 border-slate-200 hover:border-blue-700 disabled:opacity-50 disabled:transform-none">
+                                class="bg-slate-50 hover:bg-blue-500 hover:text-white p-6 rounded-[2rem] text-2xl font-black text-slate-600 transition-all transform hover:-translate-y-2 active:translate-y-1 border-b-8 border-slate-200 hover:border-blue-700 disabled:opacity-50 disabled:transform-none flex items-center justify-center">
                                 {{ $option }}
                             </button>
                         @endforeach

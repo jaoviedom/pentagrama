@@ -10,6 +10,7 @@
 <body class="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 min-h-screen">
     {{ $slot }}
     
+    @livewire('game.reward-modal')
     @livewireScripts
 </body>
 </html>

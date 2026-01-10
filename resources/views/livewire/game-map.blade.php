@@ -10,16 +10,26 @@
                     <span class="text-3xl">{{ $player->avatar }}</span>
                     <span class="font-black text-purple-700 text-xl">{{ $player->nickname }}</span>
                 </div>
+                <a href="{{ route('game.trophies') }}" 
+                   class="flex items-center gap-2 px-4 h-12 bg-gradient-to-r from-purple-400 to-pink-400 text-white rounded-2xl font-black transition-all border-b-4 border-pink-600 hover:scale-105 active:border-b-0 active:translate-y-1 shadow-md text-sm tracking-tight"
+                   title="Mi Cofre">
+                    <span>🗃️</span>
+                    <span>Cofre</span>
+                </a>
             </div>
 
             <div class="flex gap-4 items-center">
                 <a href="{{ route('game.challenge', ['world' => $world]) }}" 
                    class="hidden md:flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-2xl font-black transition-all border-b-4 border-orange-600 hover:scale-105 active:border-b-0 active:translate-y-1">
-                    🏆 ¡Reto del Día!
+                    🏆 Reto
+                </a>
+                <a href="{{ route('game.speed-challenge', ['world' => $world]) }}" 
+                   class="hidden md:flex items-center gap-2 bg-gradient-to-r from-blue-400 to-indigo-400 text-white px-6 py-3 rounded-2xl font-black transition-all border-b-4 border-indigo-600 hover:scale-105 active:border-b-0 active:translate-y-1">
+                    ⚡ Velocidad
                 </a>
                 <div class="flex gap-2">
                     <button wire:click="setWorld('sol')" 
-                        class="px-6 py-3 rounded-2xl font-black text-lg transition-all border-b-4 {{ $world === 'sol' ? 'bg-purple-500 text-white border-purple-700 scale-110 shadow-lg' : 'bg-white text-purple-500 border-purple-200 hover:bg-purple-50' }}">
+                        class="px-6 py-3 rounded-2xl font-black text-lg transition-all border-b-4 me-3 {{ $world === 'sol' ? 'bg-purple-500 text-white border-purple-700 scale-110 shadow-lg' : 'bg-white text-purple-500 border-purple-200 hover:bg-purple-50' }}">
                         🎼 Clave de Sol
                     </button>
                     <button wire:click="setWorld('fa')" 

@@ -35,6 +35,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/challenge/{world}', function ($world) {
         return view('game.challenge', ['world' => $world]);
     })->name('game.challenge');
+
+    Route::get('/speed-challenge/{world}', function ($world) {
+        return view('game.speed-challenge', ['world' => $world]);
+    })->name('game.speed-challenge');
+
+    Route::get('/trophies', function () {
+        return view('game.trophies');
+    })->name('game.trophies');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
