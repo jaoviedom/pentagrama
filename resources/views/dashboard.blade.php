@@ -48,11 +48,11 @@
                 </a>
 
                 <!-- Card 2 -->
-                <div class="bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform">
-                    <div class="text-5xl mb-4">📚</div>
+                <a href="{{ route('game.lessons') }}" class="bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform group">
+                    <div class="text-5xl mb-4 group-hover:rotate-12 transition-transform">📚</div>
                     <h3 class="text-2xl font-bold mb-2">Mis Lecciones</h3>
                     <p class="text-purple-100">Aprende cosas nuevas cada día</p>
-                </div>
+                </a>
 
                     <!-- Card 3 -->
                     <a href="{{ route('game.trophies') }}" class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-3xl p-6 shadow-xl text-white transform hover:scale-105 transition-transform group">

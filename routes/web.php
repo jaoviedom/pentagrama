@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
         return view('game.trophies');
     })->name('game.trophies');
 
+    Route::get('/lessons', function () {
+        return view('game.lessons');
+    })->name('game.lessons');
+
     Route::get('/player/profile', function () {
         return view('game.profile');
     })->name('game.profile');
