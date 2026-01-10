@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
+// Ruta principal - redirige al login si no está autenticado, al dashboard si lo está
+Route::get('/', function () {
+    return auth()->check() ? redirect('/dashboard') : redirect('/login');
+});
+
+// Rutas de autenticación (solo para invitados)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+// Rutas protegidas (requieren autenticación)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/players', function () {
+        return view('players.index');
+    })->name('players.index');
+
+    Route::get('/map', function () {
+        return view('game.map');
+    })->name('game.map');
+
+    Route::get('/lesson/{world}/{level}', function ($world, $level) {
+        return view('game.lesson', ['world' => $world, 'level' => $level]);
+    })->name('game.lesson');
+
+    Route::get('/challenge/{world}', function ($world) {
+        return view('game.challenge', ['world' => $world]);
+    })->name('game.challenge');
+    
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
