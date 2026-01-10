@@ -16,6 +16,7 @@ class StaffRenderer extends Component
 
     public $showNames = true;
     public $interactive = false;
+    public $minimal = false;
 
     public function emitNoteClick($pitch)
     {

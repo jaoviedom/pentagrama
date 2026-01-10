@@ -1,4 +1,4 @@
-<div class="relative p-8 bg-white rounded-[3rem] shadow-xl border-4 border-purple-100 overflow-hidden">
+<div class="relative {{ $minimal ? 'px-12' : 'p-8 bg-white rounded-[3rem] shadow-xl border-4 border-purple-100' }} overflow-hidden">
     <svg viewBox="0 -40 600 200" class="w-full h-auto drop-shadow-sm">
         {{-- Estilos de Animación --}}
         <defs>
@@ -14,7 +14,7 @@
             <text x="10" y="88" style="font-size: 150px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄞</text>
         @else
             {{-- Centrada en la 4ta línea del pentagrama (Fa) --}}
-            <text x="10" y="55" style="font-size: 125px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
+            <text x="10" y="75" style="font-size: 125px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
         @endif
 
         {{-- Líneas Principales del Pentagrama --}}
@@ -24,12 +24,7 @@
             @endfor
         </g>
 
-        {{-- Líneas Adicionales (Siempre visibles según requerimiento) --}}
-        <g stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" class="text-purple-100 italic">
-            <line x1="10" y1="-20" x2="550" y2="-20" /> {{-- Arriba 1 --}}
-            <line x1="10" y1="100" x2="550" y2="100" /> {{-- Abajo 1 --}}
-            <line x1="10" y1="120" x2="550" y2="120" /> {{-- Abajo 2 --}}
-        </g>
+
 
         {{-- Zonas de Clic para el modo Interactivo (Solo si $interactive es true) --}}
         @if($interactive)
@@ -53,10 +48,17 @@
             <g class="transition-all duration-500 ease-out animate-appear" 
                style="animation-delay: {{ $index * 0.2 }}s">
                 
-                {{-- Línea adicional corta (si la nota la requiere) --}}
-                @if ($pos <= -2 || $pos >= 10)
-                    <line x1="{{ $x - 15 }}" y1="{{ $y }}" x2="{{ $x + 15 }}" y2="{{ $y }}" 
-                          stroke="currentColor" stroke-width="2" class="text-purple-600" />
+                {{-- Líneas adicionales dinámicas (Solo las necesarias para esta nota) --}}
+                @if ($pos <= -2)
+                    @for ($l = -2; $l >= $pos; $l -= 2)
+                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}" 
+                              stroke="currentColor" stroke-width="2" class="text-purple-600" />
+                    @endfor
+                @elseif ($pos >= 10)
+                    @for ($l = 10; $l <= $pos; $l += 2)
+                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}" 
+                              stroke="currentColor" stroke-width="2" class="text-purple-600" />
+                    @endfor
                 @endif
 
                 {{-- Cabeza de la Nota (Solo si no está oculta) --}}
@@ -83,12 +85,14 @@
         @endforeach
     </svg>
 
-    {{-- Feedback Visual Inferior --}}
-    <div class="mt-4 flex justify-center gap-2">
-        @foreach($activeNotes as $index => $note)
-            <div class="w-3 h-3 rounded-full transition-all duration-300 {{ $note['highlighted'] ? 'bg-yellow-400 scale-125 shadow-lg' : 'bg-purple-100' }}"></div>
-        @endforeach
-    </div>
+    {{-- Feedback Visual Inferior (Oculto en modo minimal) --}}
+    @if(!$minimal)
+        <div class="mt-4 flex justify-center gap-2">
+            @foreach($activeNotes as $index => $note)
+                <div class="w-3 h-3 rounded-full transition-all duration-300 {{ $note['highlighted'] ? 'bg-yellow-400 scale-125 shadow-lg' : 'bg-purple-100' }}"></div>
+            @endforeach
+        </div>
+    @endif
 
     <style>
         @keyframes appear {
