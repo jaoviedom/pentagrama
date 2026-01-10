@@ -113,20 +113,20 @@
         @endif
     </div>
 
-    <!-- Sonidos -->
     <script>
+        function playPianoNote(pitch) {
+            if (!pitch) return;
+            const url = `https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/${pitch}.mp3`;
+            const audio = new Audio(url);
+            audio.play().catch(e => console.error("Error piano:", e));
+        }
+
         document.addEventListener('livewire:initialized', () => {
-            const success = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000.wav');
-            const error = new Audio('https://assets.mixkit.co/active_storage/sfx/2003/2003.wav');
-            
-            @this.on('playSuccessSound', () => { 
-                success.currentTime = 0;
-                success.play().catch(e => console.log('Audio error:', e)); 
+            @this.on('playSuccessSound', (event) => {
+                const pitch = event.pitch || (event[0] ? event[0].pitch : null);
+                playPianoNote(pitch);
             });
-            @this.on('playErrorSound', () => { 
-                error.currentTime = 0;
-                error.play().catch(e => console.log('Audio error:', e)); 
-            });
+            @this.on('playErrorSound', () => console.log('❌ Error!'));
         });
     </script>
 </div>

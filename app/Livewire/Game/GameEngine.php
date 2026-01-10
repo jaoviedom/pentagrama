@@ -105,7 +105,7 @@ class GameEngine extends Component
             : ($submittedNoteName === $expectedNoteName);
 
         if ($isCorrect) {
-            $this->handleSuccess();
+            $this->handleSuccess($expectedPitch);
         } else {
             $this->handleFailure($submittedNoteName, $expectedNoteName);
         }
@@ -114,7 +114,7 @@ class GameEngine extends Component
     /**
      * Gestiona un acierto del usuario.
      */
-    protected function handleSuccess()
+    protected function handleSuccess($expectedPitch)
     {
         $this->hint = null;
         $this->notes[$this->currentIndex]['status'] = 'success';
@@ -123,7 +123,7 @@ class GameEngine extends Component
         $this->notes[$this->currentIndex]['hidden'] = false;
         
         $this->currentIndex++;
-        $this->dispatch('playSuccessSound');
+        $this->dispatch('playSuccessSound', pitch: $expectedPitch);
 
         // ¿Ganó la partida?
         if ($this->currentIndex >= count($this->notes)) {

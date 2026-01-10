@@ -162,7 +162,7 @@ class NoteChallenge extends Component
                 'message' => '¡Excelente! ⭐ Lo has logrado.'
             ];
             $this->currentChallenge['notes'][0]['highlighted'] = true;
-            $this->dispatch('playSuccessSound');
+            $this->dispatch('playSuccessSound', pitch: $this->currentChallenge['notes'][0]['pitch']);
         } else {
             $this->feedback = [
                 'type' => 'error',

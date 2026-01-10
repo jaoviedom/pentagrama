@@ -50,7 +50,7 @@
             @endif
         </div>
 
-        <!-- Instrucción para niveles 31-40 (Ubicar Nota) -->
+        <!-- Instrucción para niveles interactivos (31-50) -->
         @if($gameState === 'playing' && $level > 30)
             <div class="mb-10 animate-fade-in text-center">
                 <div class="bg-white/20 backdrop-blur-md border-4 border-white/30 p-8 rounded-[3rem] inline-block shadow-2xl">
@@ -144,11 +144,25 @@
         @endif
     </div>
 
-    <!-- Sonidos (Simulados) -->
+    <!-- Sonidos de Piano Real (Samples) -->
     <script>
+        function playPianoNote(pitch) {
+            if (!pitch) return;
+            
+            // Usamos muestras reales de un piano de cola acústico
+            const url = `https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/${pitch}.mp3`;
+            
+            const audio = new Audio(url);
+            audio.play().catch(e => console.error("Error al reproducir piano:", e));
+        }
+
         document.addEventListener('livewire:init', () => {
-            Livewire.on('playSuccessSound', () => console.log('✅ ¡Nota Correcta!'));
-            Livewire.on('playErrorSound', () => console.log('❌ ¡Nota Incorrecta!'));
+            Livewire.on('playSuccessSound', (event) => {
+                const pitch = event.pitch || (event[0] ? event[0].pitch : null);
+                playPianoNote(pitch);
+            });
+            Livewire.on('playErrorSound', () => console.log('❌ Error!'));
+            Livewire.on('playHintSound', () => console.log('🔍 Pista...'));
         });
     </script>
 

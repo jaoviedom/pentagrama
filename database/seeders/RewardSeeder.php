@@ -17,6 +17,7 @@ class RewardSeeder extends Seeder
             ['name' => 'Maestro Principiante', 'description' => 'Completa el nivel 10', 'icon' => '🥇', 'type' => 'medal', 'code' => 'level_10'],
             ['name' => 'Experto en Pentagrama', 'description' => 'Completa el nivel 20', 'icon' => '🏆', 'type' => 'medal', 'code' => 'level_20'],
             ['name' => 'Virtuoso Musical', 'description' => 'Completa el nivel 30', 'icon' => '👑', 'type' => 'medal', 'code' => 'level_30'],
+            ['name' => 'Sabio de las Notas', 'description' => 'Completa el nivel 40', 'icon' => '🦉', 'type' => 'medal', 'code' => 'level_40'],
             ['name' => 'Leyenda del Sol', 'description' => 'Completa el mundo de Clave de Sol', 'icon' => '☀️', 'type' => 'medal', 'code' => 'world_sol_complete'],
             ['name' => 'Rey de los Graves', 'description' => 'Completa el mundo de Clave de Fa', 'icon' => '⚓', 'type' => 'medal', 'code' => 'world_fa_complete'],
             

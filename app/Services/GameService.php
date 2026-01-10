@@ -18,12 +18,12 @@ class GameService
         'sol' => [
             'name' => 'Clave de Sol',
             'color' => 'purple',
-            'levels' => 40
+            'levels' => 50
         ],
         'fa' => [
             'name' => 'Clave de Fa',
             'color' => 'blue',
-            'levels' => 40
+            'levels' => 50
         ]
     ];
 
@@ -103,6 +103,7 @@ class GameService
         if ($level == 10) $newRewardCode = 'level_10';
         if ($level == 20) $newRewardCode = 'level_20';
         if ($level == 30) $newRewardCode = 'level_30';
+        if ($level == 40) $newRewardCode = 'level_40';
 
         // 2. Trofeo de Mundo Completado
         if ($level == self::WORLDS[$world]['levels']) {

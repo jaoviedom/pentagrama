@@ -85,7 +85,7 @@ class SpeedChallenge extends Component
             // Calcular puntos (10 base * multiplicador)
             $this->score += (10 * $this->multiplier);
             
-            $this->dispatch('playSuccessSound');
+            $this->dispatch('playSuccessSound', pitch: $this->currentNote['pitch']);
             $this->generateNewNote();
         } else {
             // ERROR

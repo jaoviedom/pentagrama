@@ -43,11 +43,15 @@
     </div>
 
     <!-- Sonidos (Simulados con JS o feedback visual) -->
+    <!-- Sonidos de Piano Real -->
     <script>
         document.addEventListener('livewire:init', () => {
-            Livewire.on('playNoteSound', () => {
-                // Aquí podrías añadir un sonido real
-                console.log('¡Nota sonando!');
+            Livewire.on('playNoteSound', (event) => {
+                const pitch = event.pitch || (event[0] ? event[0].pitch : null);
+                if (pitch) {
+                    const url = `https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/${pitch}.mp3`;
+                    new Audio(url).play().catch(e => console.error("Error piano:", e));
+                }
             });
         });
     </script>

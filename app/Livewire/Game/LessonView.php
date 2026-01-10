@@ -63,7 +63,7 @@ class LessonView extends Component
         
         if ($this->currentIndex < count($this->currentNotes)) {
             $this->currentNotes[$this->currentIndex]['highlighted'] = true;
-            $this->dispatch('playNoteSound');
+            $this->dispatch('playNoteSound', pitch: $this->currentNotes[$this->currentIndex]['pitch']);
 
             // Si es la última nota, completamos automáticamente el nivel
             if ($this->currentIndex === count($this->currentNotes) - 1) {
