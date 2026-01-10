@@ -70,7 +70,7 @@ class SelectPlayer extends Component
             $service->recordAccess($player);
             session(['active_player_id' => $player->id]);
             
-            return redirect()->route('game.map');
+            return redirect()->route('game.selection');
         } else {
             // Error: Feedback visual y reset de entrada
             $this->pinInput = '';

@@ -8,7 +8,7 @@
                     <h1 class="text-5xl font-black text-gray-800 tracking-tight leading-none mb-2">Escuela Musical 🏫</h1>
                     <p class="text-gray-500 font-bold text-xl">¿Qué quieres aprender hoy?</p>
                 </div>
-                <a href="{{ route('dashboard') }}" class="bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
+                <a href="{{ route('game.selection') }}" class="bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
                     <span class="text-3xl">🏠</span>
                 </a>
             </header>
@@ -51,15 +51,7 @@
                     </div>
                 </button>
 
-                <!-- 5. Diccionario de Stickers -->
-                <button class="opacity-80 group relative bg-gradient-to-br from-pink-400 to-rose-500 p-1 rounded-[3rem] shadow-2xl transform hover:scale-105 transition-all">
-                    <div class="bg-white rounded-[2.8rem] p-8 h-full flex flex-col items-center text-center">
-                        <div class="text-7xl mb-6">🗃️</div>
-                        <h3 class="text-2xl font-black mb-2 text-gray-800">Diccionario Musical</h3>
-                        <p class="text-gray-500 font-medium">Tu colección de conocimientos</p>
-                        <div class="mt-4 px-4 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-black uppercase">Próximamente</div>
-                    </div>
-                </button>
+
             </div>
         </div>
     @elseif($view === 'library')

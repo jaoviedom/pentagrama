@@ -3,7 +3,7 @@
     <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 p-4 border-b-4 border-purple-200">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <a href="{{ route('players.index') }}" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-2xl transition-all border-b-4 border-gray-300 active:border-b-0 active:translate-y-1">
+                <a href="{{ route('game.selection') }}" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-2xl transition-all border-b-4 border-gray-300 active:border-b-0 active:translate-y-1">
                     🏠
                 </a>
                 <a href="{{ route('game.profile') }}" class="flex items-center gap-3 bg-purple-100 px-4 py-2 rounded-2xl border-b-4 border-purple-300 hover:bg-purple-200 transition-all active:translate-y-1 active:border-b-0 group">

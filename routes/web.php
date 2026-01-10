@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
         return view('players.index');
     })->name('players.index');
 
+    Route::get('/select-adventure', function () {
+        return view('game.adventure-selection');
+    })->name('game.selection');
+
     Route::get('/map', function () {
         return view('game.map');
     })->name('game.map');

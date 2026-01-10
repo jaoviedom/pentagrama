@@ -14,39 +14,60 @@ class NoteStory extends Component
     {
         $this->story = [
             [
-                'title' => 'El Gran Castillo del Pentagrama',
-                'content' => 'Había una vez una casita mágica de 5 pisos llamada Pentagrama. Allí vivían los sonidos más alegres del mundo.',
-                'icon' => '🏰',
-                'bg' => 'from-blue-400 to-indigo-500',
+                'title' => 'Pentagrama Mágico',
+                'content' => 'Había una vez un pueblo musical llamado Pentagrama Mágico, donde vivía la sabia Clave de Sol, una figura curva y brillante con un sombrero puntiagudo.',
+                'icon' => '✨',
+                'bg' => 'from-purple-500 to-indigo-600',
                 'character' => '🎼'
             ],
             [
-                'title' => 'La Reina Sol llega al Trono',
-                'content' => 'Un día, la Reina Sol decidió vivir en el segundo piso. Como es muy elegante, ¡donde ella se sienta, todas las notas brillan!',
-                'icon' => '𝄞',
-                'bg' => 'from-yellow-400 to-orange-500',
-                'character' => '☀️'
+                'title' => 'La Guardiana',
+                'content' => 'Ella era la guardiana del Gran Pentagrama, cinco líneas paralelas como escaleras infinitas, y un día convocó a todas las notas para que aprendieran sus posiciones.',
+                'icon' => '𝄖',
+                'bg' => 'from-blue-400 to-blue-600',
+                'character' => '🧙‍♀️'
             ],
             [
-                'title' => 'El Abuelo Fa y el Sótano Mágico',
-                'content' => 'Pero en los pisos profundos cuidaba el Abuelo Fa. Él prefiere los sonidos bajos y roncos, ¡como un gigante amigable!',
-                'icon' => '𝄢',
-                'bg' => 'from-indigo-600 to-purple-800',
+                'title' => 'La Casa de 5 Pisos',
+                'content' => 'La Clave de Sol se colocó en la segunda línea, su hogar especial. "Nuestra casa tiene cinco pisos: cuatro espacios y las líneas mismas", les dijo.',
+                'icon' => '𝄞',
+                'bg' => 'from-yellow-400 to-orange-500',
+                'character' => '🏠'
+            ],
+            [
+                'title' => 'Do y Re: Los Cimientos',
+                'content' => 'Do vive debajo del pentagrama en su propia línea añadida. Re espera en el primer espacio justo abajo. "¡Do abajo bajo, Re en espacio!", cantó la Clave.',
+                'icon' => '🔴',
+                'bg' => 'from-red-400 to-red-600',
                 'character' => '⚓'
             ],
             [
-                'title' => '¡Todos a Jugar!',
-                'content' => 'Desde entonces, todas las notas suben y bajan por los pisos y espacios del pentagrama creando las canciones que hoy escuchamos.',
-                'icon' => '🎹',
-                'bg' => 'from-green-400 to-teal-600',
-                'character' => '🎶'
+                'title' => 'Mi, Fa y Sol: ¡Subiendo!',
+                'content' => 'Mi en la Línea 1, Fa en el Espacio 2 y Sol en la Línea 2. "¡Mi línea primera, Fa arriba va, Sol en mi corona!", exclamó feliz.',
+                'icon' => '🟠',
+                'bg' => 'from-orange-400 to-orange-600',
+                'character' => '☀️'
             ],
             [
-                'title' => 'Tu Turno de Ser Maestro',
-                'content' => 'Ahora que conoces la historia, estás listo para reconocer dónde vive cada nota. ¡Vamos a la aventura!',
-                'icon' => '⭐',
-                'bg' => 'from-pink-400 to-rose-600',
-                'character' => '🦁'
+                'title' => 'La, Si y Do Agudo',
+                'content' => 'La en el Espacio 3, Si en la Línea 3 y Do agudo en el Espacio 4. "¡La en el medio, Si línea alta, Do al cielo va!", corearon todas.',
+                'icon' => '🟡',
+                'bg' => 'from-yellow-300 to-yellow-500',
+                'character' => '☁️'
+            ],
+            [
+                'title' => '¡Fiesta Musical!',
+                'content' => 'De repente, violines y flautas tocaron la escala completa. ¡Las notas saltaron de posición en posición creando la sinfonía más hermosa del mundo!',
+                'icon' => '🎻',
+                'bg' => 'from-pink-400 to-rose-500',
+                'character' => '🎉'
+            ],
+            [
+                'title' => 'El Secreto Eterno',
+                'content' => 'Desde ese día, en Pentagrama Mágico, cada nota sabe su lugar perfecto para brillar. ¡Ahora tú también conoces el secreto de la música!',
+                'icon' => '🎶',
+                'bg' => 'from-teal-400 to-emerald-500',
+                'character' => '⭐'
             ]
         ];
         $this->totalSteps = count($this->story);

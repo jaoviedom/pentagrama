@@ -17,13 +17,25 @@
         </header>
 
         <!-- Galería de Conceptos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            @foreach($concepts as $concept)
+        <div class="mb-12 flex flex-wrap justify-center gap-4">
+            @foreach($categories as $cat)
+                <button wire:click="setCategory('{{ $cat }}')" 
+                    class="px-8 py-3 rounded-2xl font-black text-lg transition-all border-b-8 shadow-lg
+                    {{ $activeCategory === $cat 
+                        ? 'bg-purple-600 border-purple-800 text-white -translate-y-2' 
+                        : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200 hover:text-purple-400' }}">
+                    {{ $cat }}
+                </button>
+            @endforeach
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 min-h-[400px]">
+            @foreach($this->filteredConcepts as $concept)
                 <button wire:click="selectConcept('{{ $concept['id'] }}')" 
                     class="group relative bg-gradient-to-br {{ $concept['bg'] }} p-1 rounded-[3rem] shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-rotate-2">
                     <div class="bg-white rounded-[2.8rem] p-8 h-full flex flex-col items-center text-center transition-colors group-hover:bg-transparent group-hover:text-white">
                         <div class="w-24 h-24 bg-gray-50 rounded-3xl flex items-center justify-center text-6xl mb-6 shadow-inner group-hover:bg-white/20 transition-colors">
-                            {{ $concept['icon'] }}
+                            {!! $concept['icon'] !!}
                         </div>
                         <h3 class="text-2xl font-black mb-2 tracking-tight group-hover:text-white">{{ $concept['title'] }}</h3>
                         <p class="text-gray-400 font-bold text-sm uppercase tracking-widest group-hover:text-white/80">{{ $concept['subtitle'] }}</p>
@@ -44,7 +56,7 @@
                     <div class="md:w-1/2 bg-gradient-to-br {{ $activeConcept['bg'] }} p-12 flex flex-col items-center justify-center text-white relative">
                         <div class="absolute top-8 left-8 text-6xl opacity-20">✨</div>
                         <div class="text-[12rem] drop-shadow-2xl animate-float">
-                            {{ $activeConcept['icon'] }}
+                            {!! $activeConcept['icon'] !!}
                         </div>
                         <div class="mt-8 text-center">
                             <h4 class="text-4xl font-black mb-2">{{ $activeConcept['title'] }}</h4>
