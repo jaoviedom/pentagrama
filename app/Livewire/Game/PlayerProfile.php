@@ -12,6 +12,7 @@ class PlayerProfile extends Component
     public $player;
     public $stats = [];
     public $medals = [];
+    public $allMedals = [];
     public $recentRewards = [];
 
     public function mount()
@@ -20,6 +21,15 @@ class PlayerProfile extends Component
         if (!$playerId) return redirect()->route('players.index');
 
         $this->player = Player::with(['progress', 'rewards'])->findOrFail($playerId);
+        
+        // Cargar definición de todas las medallas existentes (Sol primero que Fa alfabéticamente inverso)
+        $this->allMedals = Reward::where('type', 'medal')->orderBy('code', 'desc')->get();
+        
+        // Sincronización automática de medallas al entrar al perfil (ambos mundos)
+        $gameService = new GameService();
+        $gameService->checkRewards($this->player, 'sol', 0);
+        $gameService->checkRewards($this->player, 'fa', 0);
+
         $this->calculateStats();
     }
 
@@ -27,8 +37,8 @@ class PlayerProfile extends Component
     {
         $progress = $this->player->progress;
         
-        // Mundos completados (donde existe nivel 40 completado)
-        $completedWorlds = $progress->where('level', 40)->where('is_completed', true)->pluck('world')->unique()->count();
+        // Mundos completados (donde existe nivel 50 completado)
+        $completedWorlds = $progress->where('level', 50)->where('is_completed', true)->pluck('world')->unique()->count();
         
         // Total de estrellas
         $totalStars = $progress->sum('stars');

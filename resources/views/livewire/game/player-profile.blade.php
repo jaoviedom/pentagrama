@@ -60,26 +60,15 @@
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
-                    @php
-                        $medalSlots = [
-                            ['code' => 'medal_sol_bronce', 'name' => 'Bronce Sol', 'icon' => '🥉'],
-                            ['code' => 'medal_sol_plata', 'name' => 'Plata Sol', 'icon' => '🥈'],
-                            ['code' => 'medal_sol_oro', 'name' => 'Oro Sol', 'icon' => '🥇'],
-                            ['code' => 'medal_fa_bronce', 'name' => 'Bronce Fa', 'icon' => '🥉'],
-                            ['code' => 'medal_fa_plata', 'name' => 'Plata Fa', 'icon' => '🥈'],
-                            ['code' => 'medal_fa_oro', 'name' => 'Oro Fa', 'icon' => '🥇'],
-                        ];
-                    @endphp
-
-                    @foreach($medalSlots as $slot)
+                    @foreach($allMedals as $medal)
                         @php
-                            $earned = $medals->where('code', $slot['code'])->first();
+                            $earned = $medals->where('code', $medal->code)->first();
                         @endphp
                         <div class="relative group">
                             <div class="aspect-square bg-white rounded-3xl p-6 shadow-lg border-4 border-white transition-all duration-500 {{ $earned ? 'transform hover:scale-110 hover:rotate-3 shadow-xl' : 'opacity-20 grayscale border-dashed border-gray-300' }}">
                                 <div class="w-full h-full rounded-2xl flex flex-col items-center justify-center border-2 border-gray-50 bg-gray-50/50">
-                                    <span class="text-5xl mb-2">{{ $slot['icon'] }}</span>
-                                    <span class="text-[10px] font-black text-center text-gray-500 uppercase">{{ $slot['name'] }}</span>
+                                    <span class="text-5xl mb-2">{{ $medal->icon }}</span>
+                                    <span class="text-[10px] font-black text-center text-gray-500 uppercase">{{ $medal->name }}</span>
                                 </div>
                             </div>
                             @if(!$earned)

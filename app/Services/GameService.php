@@ -99,26 +99,40 @@ class GameService
     {
         $newRewardCode = null;
 
-        // 1. Hitos de Medallas Milestones
-        if ($level == 10) $newRewardCode = 'level_10';
-        if ($level == 20) $newRewardCode = 'level_20';
-        if ($level == 30) $newRewardCode = 'level_30';
-        if ($level == 40) $newRewardCode = 'level_40';
-
-        // 2. Trofeo de Mundo Completado
-        if ($level == self::WORLDS[$world]['levels']) {
-            $newRewardCode = "world_{$world}_complete";
-        }
-
-        if ($newRewardCode) {
-            $reward = Reward::where('code', $newRewardCode)->first();
+        // 1. Hitos acumulativos (Retrospectivo): Asegura que si el niño ya pasó el nivel, reciba su medalla específica del mundo
+        $milestoneLevels = [10, 20, 30, 40];
+        
+        foreach ($milestoneLevels as $mLevel) {
+            $code = "{$world}_level_{$mLevel}";
             
-            // Otorgar solo si no existe ya en su colección
-            if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
-                $player->rewards()->attach($reward->id, ['earned_at' => now()]);
-                return $newRewardCode;
+            // Si el jugador ha llegado o pasado este nivel en ESTE mundo específico
+            $hasReached = Progress::where('player_id', $player->id)
+                ->where('world', $world)
+                ->where('level', '>=', $mLevel)
+                ->where('level', '<', 90)
+                ->exists();
+            
+            if ($hasReached) {
+                $reward = Reward::where('code', $code)->first();
+                if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
+                    $player->rewards()->attach($reward->id, ['earned_at' => now()]);
+                    if ($level == $mLevel) $newRewardCode = $code;
+                }
             }
         }
+
+        // 2. Trofeo de Mundo Completado
+        $worldMax = self::WORLDS[$world]['levels'];
+        if ($level == $worldMax) {
+            $code = "world_{$world}_complete";
+            $reward = Reward::where('code', $code)->first();
+            if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
+                $player->rewards()->attach($reward->id, ['earned_at' => now()]);
+                $newRewardCode = $code;
+            }
+        }
+
+        if ($newRewardCode) return $newRewardCode;
 
         // 3. Sistema de "Loot" Aleatorio (Personajes e Instrumentos)
         // 10% de probabilidad de encontrar algo raro tras cualquier nivel

@@ -14,12 +14,19 @@ class RewardSeeder extends Seeder
     {
         $rewards = [
             // Medallas
-            ['name' => 'Maestro Principiante', 'description' => 'Completa el nivel 10', 'icon' => '🥇', 'type' => 'medal', 'code' => 'level_10'],
-            ['name' => 'Experto en Pentagrama', 'description' => 'Completa el nivel 20', 'icon' => '🏆', 'type' => 'medal', 'code' => 'level_20'],
-            ['name' => 'Virtuoso Musical', 'description' => 'Completa el nivel 30', 'icon' => '👑', 'type' => 'medal', 'code' => 'level_30'],
-            ['name' => 'Sabio de las Notas', 'description' => 'Completa el nivel 40', 'icon' => '🦉', 'type' => 'medal', 'code' => 'level_40'],
+            // Medallas Clave de Sol (Brillo/Luz)
+            ['name' => 'Aprendiz de Sol', 'description' => 'Nivel 10 en Clave de Sol', 'icon' => '🕯️', 'type' => 'medal', 'code' => 'sol_level_10'],
+            ['name' => 'Explorador Estelar', 'description' => 'Nivel 20 en Clave de Sol', 'icon' => '🚀', 'type' => 'medal', 'code' => 'sol_level_20'],
+            ['name' => 'Mago Melódico', 'description' => 'Nivel 30 en Clave de Sol', 'icon' => '🪄', 'type' => 'medal', 'code' => 'sol_level_30'],
+            ['name' => 'Guardián de la Clave', 'description' => 'Nivel 40 en Clave de Sol', 'icon' => '🛡️', 'type' => 'medal', 'code' => 'sol_level_40'],
             ['name' => 'Leyenda del Sol', 'description' => 'Completa el mundo de Clave de Sol', 'icon' => '☀️', 'type' => 'medal', 'code' => 'world_sol_complete'],
-            ['name' => 'Rey de los Graves', 'description' => 'Completa el mundo de Clave de Fa', 'icon' => '⚓', 'type' => 'medal', 'code' => 'world_fa_complete'],
+
+            // Medallas Clave de Fa (Profundidades)
+            ['name' => 'Rumbo a los Graves', 'description' => 'Nivel 10 en Clave de Fa', 'icon' => '🚣', 'type' => 'medal', 'code' => 'fa_level_10'],
+            ['name' => 'Buceador de Notas', 'description' => 'Nivel 20 en Clave de Fa', 'icon' => '🤿', 'type' => 'medal', 'code' => 'fa_level_20'],
+            ['name' => 'Capitán del Ritmo', 'description' => 'Nivel 30 en Clave de Fa', 'icon' => '⚓', 'type' => 'medal', 'code' => 'fa_level_30'],
+            ['name' => 'Maestro Profundo', 'description' => 'Nivel 40 en Clave de Fa', 'icon' => '🧜', 'type' => 'medal', 'code' => 'fa_level_40'],
+            ['name' => 'Rey de los Graves', 'description' => 'Completa el mundo de Clave de Fa', 'icon' => '🐋', 'type' => 'medal', 'code' => 'world_fa_complete'],
             
             // Personajes (Avatares)
             ['name' => 'Zorro Astuto', 'description' => 'Desbloqueado por tu talento', 'icon' => '🦊', 'type' => 'character', 'code' => 'char_fox'],
