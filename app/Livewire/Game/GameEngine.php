@@ -5,34 +5,54 @@ namespace App\Livewire\Game;
 use App\Models\Player;
 use App\Services\GameService;
 use Livewire\Component;
-
 use Livewire\Attributes\On;
 
+/**
+ * Motor de Juego Principal: Controla el flujo de las lecciones interactivas.
+ */
 class GameEngine extends Component
 {
+    // Estado del Jugador y Mundo
     public $player;
     public $world;
     public $level;
     
+    // Estado de la Partida
     public $notes = [];
     public $currentIndex = 0;
     public $lives = 3;
-    public $gameState = 'waiting'; // 'waiting', 'playing', 'won', 'lost'
+    public $gameState = 'waiting'; // waiting, playing, won, lost
     public $stars = 0;
     public $hint = null;
+    public $names = ['C' => 'Do', 'D' => 'Re', 'E' => 'Mi', 'F' => 'Fa', 'G' => 'Sol', 'A' => 'La', 'B' => 'Si'];
 
+    /**
+     * Inicialización del componente con validación de seguridad.
+     */
     public function mount($world, $level)
     {
         $playerId = session('active_player_id');
-        if (!$playerId) return redirect()->route('players.index');
+        if (!$playerId) {
+            return redirect()->route('players.index');
+        }
         
-        $this->player = Player::findOrFail($playerId);
+        $this->player = Player::find($playerId);
+        
+        // Verificación de integridad: si el jugador no existe por alguna razón
+        if (!$this->player) {
+            session()->forget('active_player_id');
+            return redirect()->route('players.index');
+        }
+
         $this->world = $world;
         $this->level = (int)$level;
         
         $this->initGame();
     }
 
+    /**
+     * Prepara el estado inicial del juego para un nivel.
+     */
     public function initGame()
     {
         $gameService = new GameService();
@@ -44,80 +64,112 @@ class GameEngine extends Component
         $this->hint = null;
     }
 
+    /**
+     * Cambia el estado a 'playing' para ocultar el banner inicial.
+     */
     public function startGame()
     {
         $this->gameState = 'playing';
     }
 
+    /**
+     * Escuchador para la ubicación manual de notas (Niveles 31-40).
+     */
     #[On('notePlaced')]
     public function placeNote($pitch)
     {
-        if ($this->level <= 30) return; // Solo activo para niveles 31-40
-        $this->submitNote($pitch);
+        // Solo respondemos a este evento en niveles interactivos avanzados
+        if ($this->level > 30) {
+            $this->submitNote($pitch);
+        }
     }
 
+    /**
+     * Procesa la respuesta del usuario y actualiza el estado del juego.
+     */
     public function submitNote($pitch)
     {
         if ($this->gameState !== 'playing') return;
 
-        $expectedNote = $this->notes[$this->currentIndex]['pitch'];
+        $expectedNoteData = $this->notes[$this->currentIndex];
+        $expectedPitch = $expectedNoteData['pitch'];
 
-        // Comparamos solo la base de la nota (ej: 'C' de 'C4' o 'C5')
-        $expectedBase = substr($expectedNote, 0, 1);
-        $submittedBase = substr($pitch, 0, 1);
+        // Lógica de validación simplificada vs estricta
+        $expectedNoteName = substr($expectedPitch, 0, 1);
+        $submittedNoteName = substr($pitch, 0, 1);
 
-        // En niveles > 30, la comparación es más estricta: debe ser el pitch exacto (octava incluida)
+        // En niveles avanzados (>30) validamos la octava exacta. 
+        // En niveles básicos validamos solo el nombre de la nota.
         $isCorrect = ($this->level > 30) 
-            ? ($pitch === $expectedNote)
-            : ($submittedBase === $expectedBase);
+            ? ($pitch === $expectedPitch)
+            : ($submittedNoteName === $expectedNoteName);
 
         if ($isCorrect) {
-            // Acierto
-            $this->hint = null;
-            $this->notes[$this->currentIndex]['status'] = 'success';
-            $this->notes[$this->currentIndex]['highlighted'] = true;
-            $this->notes[$this->currentIndex]['hidden'] = false; // Mostrar la nota al acertar
-            $this->currentIndex++;
-            
-            $this->dispatch('playSuccessSound');
-
-            if ($this->currentIndex >= count($this->notes)) {
-                $this->calculateStarsAndWin();
-            }
+            $this->handleSuccess();
         } else {
-            // Error o Pista
-            if ($this->level > 30 && $submittedBase === $expectedBase) {
-                // Pista: Nombre correcto, posición incorrecta
-                $names = ['C' => 'Do', 'D' => 'Re', 'E' => 'Mi', 'F' => 'Fa', 'G' => 'Sol', 'A' => 'La', 'B' => 'Si'];
-                $this->hint = "¡Casi! Ese es un " . $names[$submittedBase] . ", pero busca en otra posición. 🔍";
-                $this->dispatch('playHintSound');
-            } else {
-                // Error total
-                $this->hint = null;
-                $this->lives--;
-                $this->dispatch('playErrorSound');
-                
-                if ($this->lives <= 0) {
-                    $this->gameState = 'lost';
-                }
+            $this->handleFailure($submittedNoteName, $expectedNoteName);
+        }
+    }
+
+    /**
+     * Gestiona un acierto del usuario.
+     */
+    protected function handleSuccess()
+    {
+        $this->hint = null;
+        $this->notes[$this->currentIndex]['status'] = 'success';
+        $this->notes[$this->currentIndex]['highlighted'] = true;
+        // Revelamos la nota si estaba oculta (niveles avanzados)
+        $this->notes[$this->currentIndex]['hidden'] = false;
+        
+        $this->currentIndex++;
+        $this->dispatch('playSuccessSound');
+
+        // ¿Ganó la partida?
+        if ($this->currentIndex >= count($this->notes)) {
+            $this->finalizeWin();
+        }
+    }
+
+    /**
+     * Gestiona un error del usuario, proporcionando pistas si es necesario.
+     */
+    protected function handleFailure($submittedName, $expectedName)
+    {
+        // Pista pedagógica: Si acertó la nota pero falló la octava (niveles > 30)
+        if ($this->level > 30 && $submittedName === $expectedName) {
+            $this->hint = "¡Bien! Es un " . $this->names[$submittedName] . ", pero búscalo en otra posición. 🔍";
+            $this->dispatch('playHintSound');
+        } else {
+            // Error común
+            $this->hint = null;
+            $this->lives--;
+            $this->dispatch('playErrorSound');
+            
+            if ($this->lives <= 0) {
+                $this->gameState = 'lost';
             }
         }
     }
 
-    protected function calculateStarsAndWin()
+    /**
+     * Calcula estrellas, guarda progreso y verifica recompensas sorpresa.
+     */
+    protected function finalizeWin()
     {
         $this->gameState = 'won';
         
-        // Estrellas según vidas restantes
-        if ($this->lives === 3) $this->stars = 3;
-        elseif ($this->lives === 2) $this->stars = 2;
-        else $this->stars = 1;
+        // Puntuación de estrellas basada en el rendimiento
+        $this->stars = match($this->lives) {
+            3 => 3,
+            2 => 2,
+            default => 1,
+        };
 
-        // Guardar progreso automáticamente
         $gameService = new GameService();
         $gameService->completeLevel($this->player, $this->world, $this->level, $this->stars);
 
-        // Verificar recompensas
+        // Gamificación: ¿Ganó algo nuevo?
         $rewardCode = $gameService->checkRewards($this->player, $this->world, $this->level);
         if ($rewardCode) {
             $this->dispatch('show-reward', rewardCode: $rewardCode);

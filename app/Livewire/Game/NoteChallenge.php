@@ -80,7 +80,7 @@ class NoteChallenge extends Component
 
                 case 'line_space':
                     $note = $allPossibleNotes[array_rand($allPossibleNotes)];
-                    $renderer = new \App\Livewire\StaffRenderer();
+                    $renderer = new \App\Livewire\Game\StaffRenderer();
                     $renderer->clef = $this->world;
                     $pos = $renderer->getNotePosition($note);
                     $correct = ($pos % 2 === 0) ? 'Línea' : 'Espacio';
@@ -98,7 +98,7 @@ class NoteChallenge extends Component
                     $note2 = $allPossibleNotes[array_rand($allPossibleNotes)];
                     while($note1 === $note2) $note2 = $allPossibleNotes[array_rand($allPossibleNotes)];
                     
-                    $renderer = new \App\Livewire\StaffRenderer();
+                    $renderer = new \App\Livewire\Game\StaffRenderer();
                     $renderer->clef = $this->world;
                     $correct = ($renderer->getNotePosition($note2) > $renderer->getNotePosition($note1)) ? 'Sube ⬆️' : 'Baja ⬇️';
 
@@ -121,7 +121,7 @@ class NoteChallenge extends Component
                     }
                     $note = $ledgerNotes[array_rand($ledgerNotes)];
                     
-                    $renderer = new \App\Livewire\StaffRenderer();
+                    $renderer = new \App\Livewire\Game\StaffRenderer();
                     $renderer->clef = $this->world;
                     $pos = $renderer->getNotePosition($note);
                     

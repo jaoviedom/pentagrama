@@ -13,7 +13,7 @@
 
         <!-- Pentagrama Renderer -->
         <div class="mb-12">
-            @livewire('staff-renderer', ['clef' => $world, 'activeNotes' => $currentNotes])
+            @livewire('game.staff-renderer', ['clef' => $world, 'activeNotes' => $currentNotes])
         </div>
 
         <!-- Controles -->

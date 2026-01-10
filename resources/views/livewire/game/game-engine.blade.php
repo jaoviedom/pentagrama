@@ -32,7 +32,7 @@
         <!-- Área Principal: Pentagrama -->
         <div class="relative mb-10 group">
             <div class="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-pink-500 rounded-[4rem] blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-            @livewire('staff-renderer', [
+            @livewire('game.staff-renderer', [
                 'clef' => $world, 
                 'activeNotes' => $notes,
                 'showNames' => ($world === 'sol') ? ($level <= 10) : ($level <= 20),

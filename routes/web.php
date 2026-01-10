@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/trophies', function () {
         return view('game.trophies');
     })->name('game.trophies');
+
+    Route::get('/player/profile', function () {
+        return view('game.profile');
+    })->name('game.profile');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

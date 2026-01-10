@@ -6,8 +6,9 @@
         <div class="flex justify-between items-center bg-white/10 backdrop-blur-md rounded-[2.5rem] p-6 mb-8 border-4 border-white/20 shadow-2xl">
             <div class="flex items-center gap-6">
                 <!-- Home -->
-                <a href="{{ route('game.map') }}" class="w-16 h-16 bg-white/20 hover:bg-white/40 flex items-center justify-center rounded-2xl transition-all shadow-lg border-b-4 border-white/10 active:border-b-0 active:translate-y-1">
-                    <span class="text-3xl">🏠</span>
+                <a href="{{ route('game.map') }}" 
+                   class="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-black transition-all border-b-4 border-pink-700 hover:scale-105 active:border-b-0 active:translate-y-1 shadow-xl text-3xl">
+                    🗺️
                 </a>
                 <!-- Tiempo -->
                 <div class="bg-red-500 text-white px-6 py-3 rounded-2xl flex flex-col items-center shadow-lg border-b-4 border-red-700">
@@ -39,7 +40,7 @@
         <div class="relative mb-10 group min-h-[300px] flex items-center justify-center">
             @if($gameState === 'playing')
                 <div class="w-full">
-                    @livewire('staff-renderer', [
+                    @livewire('game.staff-renderer', [
                         'clef' => $world, 
                         'activeNotes' => $activeNotes,
                         'showNames' => false,

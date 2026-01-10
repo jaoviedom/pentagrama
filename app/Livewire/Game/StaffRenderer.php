@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Game;
 
 use Livewire\Component;
 
@@ -62,6 +62,6 @@ class StaffRenderer extends Component
 
     public function render()
     {
-        return view('livewire.staff-renderer');
+        return view('livewire.game.staff-renderer');
     }
 }

@@ -6,10 +6,10 @@
                 <a href="{{ route('players.index') }}" class="bg-gray-100 hover:bg-gray-200 p-3 rounded-2xl transition-all border-b-4 border-gray-300 active:border-b-0 active:translate-y-1">
                     🏠
                 </a>
-                <div class="flex items-center gap-3 bg-purple-100 px-4 py-2 rounded-2xl border-b-4 border-purple-300">
-                    <span class="text-3xl">{{ $player->avatar }}</span>
+                <a href="{{ route('game.profile') }}" class="flex items-center gap-3 bg-purple-100 px-4 py-2 rounded-2xl border-b-4 border-purple-300 hover:bg-purple-200 transition-all active:translate-y-1 active:border-b-0 group">
+                    <span class="text-3xl group-hover:scale-110 transition-transform">{{ $player->avatar }}</span>
                     <span class="font-black text-purple-700 text-xl">{{ $player->nickname }}</span>
-                </div>
+                </a>
                 <a href="{{ route('game.trophies') }}" 
                    class="flex items-center gap-2 px-4 h-12 bg-gradient-to-r from-purple-400 to-pink-400 text-white rounded-2xl font-black transition-all border-b-4 border-pink-600 hover:scale-105 active:border-b-0 active:translate-y-1 shadow-md text-sm tracking-tight"
                    title="Mi Cofre">

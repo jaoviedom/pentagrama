@@ -35,7 +35,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Columna Izquierda: Perfil -->
                 <div class="lg:col-span-1">
-                    @livewire('user-profile')
+                    @livewire('config.user-profile')
                 </div>
 
                 <!-- Columna Derecha: Acciones -->

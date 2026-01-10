@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Game;
 
 use App\Models\Player;
 use App\Services\GameService;
@@ -38,7 +38,7 @@ class GameMap extends Component
         $lastPlayed = $gameService->getLastPlayedLevel($this->player);
         $worldsConfig = GameService::WORLDS;
 
-        return view('livewire.game-map', [
+        return view('livewire.game.game-map', [
             'levels' => $progress,
             'lastPlayed' => $lastPlayed,
             'worldName' => $worldsConfig[$this->world]['name'],

@@ -38,5 +38,8 @@ class DatabaseSeeder extends Seeder
             'rol' => 'estudiante',
             'activo' => true,
         ]);
+
+        // Cargar catálogo de premios
+        $this->call(RewardSeeder::class);
     }
 }

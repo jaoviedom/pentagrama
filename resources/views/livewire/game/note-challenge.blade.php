@@ -3,8 +3,9 @@
         <!-- Dashboard Header -->
         <div class="flex justify-between items-center bg-white rounded-3xl p-6 shadow-xl mb-8 border-b-8 border-blue-100">
             <div class="flex items-center gap-4">
-                <a href="{{ route('game.map') }}" class="w-12 h-12 bg-blue-50 hover:bg-blue-100 flex items-center justify-center rounded-2xl transition-all">
-                    🏠
+                <a href="{{ route('game.map') }}" 
+                   class="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-2xl font-black transition-all border-b-4 border-indigo-700 hover:scale-105 active:border-b-0 active:translate-y-1 shadow-lg text-2xl">
+                    🗺️
                 </a>
                 <div>
                     <h2 class="text-2xl font-black text-slate-800">Desafío Musical</h2>
@@ -36,7 +37,7 @@
                     
                     <!-- Staff Integration -->
                     <div class="mb-10 transform hover:scale-[1.02] transition-transform">
-                        @livewire('staff-renderer', [
+                        @livewire('game.staff-renderer', [
                             'clef' => $world, 
                             'activeNotes' => $currentChallenge['notes'],
                             'showNames' => false,
