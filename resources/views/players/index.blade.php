@@ -1,28 +1,25 @@
-<x-layouts.app title="Seleccionar Jugador - Pentagrama">
-    <div class="min-h-screen p-8 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100">
-        <!-- Botones de Gestión (Padres/Profesores) -->
-        <div class="max-w-7xl mx-auto flex justify-between mb-8">
-            <a href="{{ route('dashboard') }}" class="bg-white/80 hover:bg-white text-purple-600 px-6 py-2 rounded-2xl font-black transition-all border-b-4 border-purple-300 active:border-b-0 active:translate-y-1 flex items-center gap-2">
-                📊 Panel de Control
-            </a>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="bg-white/50 hover:bg-white text-gray-600 px-6 py-2 rounded-2xl font-bold transition-all border-b-4 border-gray-300 active:border-b-0 active:translate-y-1">
-                    🔒 Salir
-                </button>
-            </form>
+<x-layouts.app title="Seleccionar Jugador - Exploradores del Pentagrama">
+    <div class="min-h-screen p-8 bg-[#FDFCF0] flex flex-col items-center justify-center font-['Outfit',sans-serif]">
+        <!-- Cabecera Amigable -->
+        <div class="text-center mb-12 animate-fade-in-down">
+            <h1 class="text-5xl font-black text-gray-800 tracking-tight mb-4">¿Quién va a jugar ahora?</h1>
+            <p class="text-xl text-gray-500 font-bold">Selecciona tu avatar para continuar la aventura</p>
         </div>
 
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <!-- Selección de Jugador -->
-            <div class="lg:col-span-2">
+        <div class="max-w-4xl w-full">
+            <!-- Selección de Jugador (Componente Livewire centralizado) -->
+            <div class="bg-white rounded-[3.5rem] p-4 shadow-2xl border-b-8 border-gray-200">
                 @livewire('players.select-player')
             </div>
-
-            <!-- Crear Jugador -->
-            <div class="lg:col-span-1">
-                @livewire('players.create-player')
-            </div>
         </div>
+
     </div>
+
+    <style>
+        @keyframes fade-in-down {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down { animation: fade-in-down 0.5s ease-out; }
+    </style>
 </x-layouts.app>

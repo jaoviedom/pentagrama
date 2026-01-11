@@ -5,7 +5,15 @@ use App\Http\Controllers\AuthController;
 
 // Ruta principal - muestra la pantalla de selección o el dashboard
 Route::get('/', function () {
-    return auth()->check() ? redirect('/dashboard') : view('welcome');
+    if (!auth()->check()) return view('welcome');
+    
+    // Si es un niño jugando, lo mandamos a la selección de aventura
+    if (session('active_player_id')) {
+        return redirect()->route('game.selection');
+    }
+    
+    // Si es el guardián, lo mandamos al dashboard
+    return redirect()->route('dashboard');
 });
 
 // Rutas de autenticación (solo para invitados)

@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             
-            return redirect()->intended('/players');
+            return redirect()->intended('/dashboard');
         }
 
         return back()->withErrors([

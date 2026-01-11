@@ -33,7 +33,19 @@ class AnalyticsDashboard extends Component
                 ->where('is_completed', true)
                 ->max('level') ?? 0;
 
-            // 2. Notas con más errores (Agregamos lógica de conteo manual por compatibilidad con SQLite JSON)
+            // 2. Resultados de Minijuegos (Desafíos)
+            // Desafío de Velocidad (Level 99)
+            $speedRecord = \App\Models\Progress::where('player_id', $player->id)
+                ->where('level', 99)
+                ->max('best_score') ?? 0;
+
+            // Reto de Notas (Level 99 stars o similar)
+            $completedChallenges = \App\Models\Progress::where('player_id', $player->id)
+                ->where('level', 99)
+                ->where('is_completed', true)
+                ->count();
+
+            // 3. Notas con más errores
             $errorLogs = \App\Models\GameLog::where('player_id', $player->id)
                 ->where('event_type', 'error')
                 ->get();
@@ -47,18 +59,12 @@ class AnalyticsDashboard extends Component
             arsort($failedNotes);
             $topFailed = array_slice($failedNotes, 0, 5, true);
 
-            // 3. Tiempo de uso (Segundos a Minutos)
-            $totalSeconds = \App\Models\GameLog::where('player_id', $player->id)
+            // 4. Tiempo de uso
+            $totalSeconds = 0;
+            $completeLogs = \App\Models\GameLog::where('player_id', $player->id)
                 ->where('event_type', 'level_complete')
-                ->sum(\Illuminate\Support\Facades\DB::raw("CAST(JSON_EXTRACT(data, '$.duration') AS INTEGER)")); 
-            
-            // Si SQLite no soporta JSON_EXTRACT directamente en sum, lo hacemos en PHP para mayor seguridad
-            if ($totalSeconds == 0) {
-                $completeLogs = \App\Models\GameLog::where('player_id', $player->id)
-                    ->where('event_type', 'level_complete')
-                    ->get();
-                foreach($completeLogs as $l) $totalSeconds += ($l->data['duration'] ?? 0);
-            }
+                ->get();
+            foreach($completeLogs as $l) $totalSeconds += ($l->data['duration'] ?? 0);
 
             $this->playersData[] = [
                 'player' => $player,
@@ -66,8 +72,12 @@ class AnalyticsDashboard extends Component
                     'sol' => $progressSol,
                     'fa' => $progressFa
                 ],
+                'minigames' => [
+                    'speed_record' => $speedRecord,
+                    'challenges_done' => $completedChallenges
+                ],
                 'top_failed' => $topFailed,
-                'usage_time' => round($totalSeconds / 60, 1) // en minutos
+                'usage_time' => round($totalSeconds / 60, 1)
             ];
         }
     }

@@ -26,7 +26,7 @@
                         <input type="text" 
                             wire:model="nicknameInput"
                             placeholder="Ej: SuperPianista"
-                            class="w-full text-center text-3xl font-black py-5 px-6 bg-purple-50 border-4 border-purple-100 rounded-[2.5rem] focus:border-purple-500 focus:bg-white transition-all outline-none placeholder:text-purple-200 uppercase"
+                            class="w-full text-center text-3xl font-black py-5 px-6 bg-purple-50 border-4 border-purple-100 rounded-[2.5rem] focus:border-purple-500 focus:bg-white transition-all outline-none placeholder:text-purple-200"
                         >
                     </div>
 

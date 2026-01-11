@@ -11,7 +11,7 @@
                 <h1 class="text-5xl font-black text-gray-800 tracking-tight leading-none mb-2">Biblioteca de <span class="text-purple-600">Conceptos</span></h1>
                 <p class="text-gray-500 font-bold text-xl">¡Aprende los secretos de la música! 🪄🎼</p>
             </div>
-            <a href="{{ route('dashboard') }}" class="relative z-10 bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
+            <a href="{{ route('game.selection') }}" class="relative z-10 bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
                 <span class="text-3xl">🏠</span>
             </a>
         </header>

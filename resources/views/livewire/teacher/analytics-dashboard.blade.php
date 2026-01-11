@@ -60,6 +60,24 @@
                                 <div class="h-full bg-blue-500 rounded-full transition-all duration-1000" style="width: {{ ($data['progress']['fa'] / 50) * 100 }}%"></div>
                             </div>
                         </div>
+
+                        <!-- Minijuegos -->
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="bg-cyan-50 p-4 rounded-2xl border border-cyan-100">
+                                <span class="text-[10px] font-black text-cyan-600 uppercase block mb-1">Velocidad</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">⚡</span>
+                                    <span class="text-lg font-black text-cyan-700">{{ $data['minigames']['speed_record'] }} pts</span>
+                                </div>
+                            </div>
+                            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                                <span class="text-[10px] font-black text-amber-600 uppercase block mb-1">Retos</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">🏆</span>
+                                    <span class="text-lg font-black text-amber-700">{{ $data['minigames']['challenges_done'] }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Alertas Pedagógicas: Notas más falladas -->
