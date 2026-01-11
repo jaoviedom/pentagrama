@@ -32,6 +32,14 @@ class GameMap extends Component
         return redirect()->route('game.lesson', ['world' => $this->world, 'level' => $level]);
     }
 
+    public function logout()
+    {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/');
+    }
+
     public function render(GameService $gameService)
     {
         $progress = $gameService->getPlayerProgress($this->player, $this->world);

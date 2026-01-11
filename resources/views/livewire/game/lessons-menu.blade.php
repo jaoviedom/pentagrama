@@ -8,9 +8,14 @@
                     <h1 class="text-5xl font-black text-gray-800 tracking-tight leading-none mb-2">Escuela Musical 🏫</h1>
                     <p class="text-gray-500 font-bold text-xl">¿Qué quieres aprender hoy?</p>
                 </div>
-                <a href="{{ route('game.selection') }}" class="bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
-                    <span class="text-3xl">🏠</span>
-                </a>
+                <div class="flex gap-4">
+                    <button wire:click="logout" class="bg-red-50 hover:bg-red-100 text-red-500 p-5 rounded-[2rem] shadow-lg border-b-8 border-red-100 active:border-b-0 active:translate-y-1 transition-all" title="Cerrar Sesión">
+                        <span class="text-3xl">🚪</span>
+                    </button>
+                    <a href="{{ route('game.selection') }}" class="bg-white hover:bg-gray-50 text-gray-600 p-5 rounded-[2rem] shadow-lg border-b-8 border-gray-200 active:border-b-0 active:translate-y-1 transition-all" title="Inicio">
+                        <span class="text-3xl">🏠</span>
+                    </a>
+                </div>
             </header>
 
             <!-- Grid de Opciones -->

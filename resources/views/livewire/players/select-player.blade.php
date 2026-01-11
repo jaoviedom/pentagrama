@@ -24,7 +24,7 @@
         @if(count($players) === 0)
             <div class="text-center py-20 px-8 bg-white/50 backdrop-blur-sm rounded-[3rem] border-4 border-dashed border-purple-200 animate-pulse">
                 <div class="text-8xl mb-6">🎉</div>
-                <h3 class="text-3xl font-black text-purple-600 mb-4">¡Bienvenido a Pentagrama!</h3>
+                <h3 class="text-3xl font-black text-purple-600 mb-4">¡Bienvenido a Exploradores del Pentagrama!</h3>
                 <p class="text-gray-500 font-bold text-lg mb-8 max-w-md mx-auto">
                     Aún no hay ningún aventurero musical. <br>
                     ¡Crea el primer personaje para empezar el viaje! 🚀

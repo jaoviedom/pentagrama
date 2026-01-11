@@ -3,15 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-// Ruta principal - redirige al login si no está autenticado, al dashboard si lo está
+// Ruta principal - muestra la pantalla de selección o el dashboard
 Route::get('/', function () {
-    return auth()->check() ? redirect('/dashboard') : redirect('/login');
+    return auth()->check() ? redirect('/dashboard') : view('welcome');
 });
 
 // Rutas de autenticación (solo para invitados)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/aventura', \App\Livewire\Game\PlayerLogin::class)->name('game.player-login');
 });
 
 // Rutas protegidas (requieren autenticación)

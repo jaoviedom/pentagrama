@@ -14,8 +14,8 @@ class NoteStory extends Component
     {
         $this->story = [
             [
-                'title' => 'Pentagrama Mágico',
-                'content' => 'Había una vez un pueblo musical llamado Pentagrama Mágico, donde vivía la sabia Clave de Sol, una figura curva y brillante con un sombrero puntiagudo.',
+                'title' => 'Exploradores del Pentagrama',
+                'content' => 'Había una vez un pueblo musical llamado Exploradores del Pentagrama, donde vivía la sabia Clave de Sol, una figura curva y brillante con un sombrero puntiagudo.',
                 'icon' => '✨',
                 'bg' => 'from-purple-500 to-indigo-600',
                 'character' => '🎼'
@@ -64,7 +64,7 @@ class NoteStory extends Component
             ],
             [
                 'title' => 'El Secreto Eterno',
-                'content' => 'Desde ese día, en Pentagrama Mágico, cada nota sabe su lugar perfecto para brillar. ¡Ahora tú también conoces el secreto de la música!',
+                'content' => 'Desde ese día, en Exploradores del Pentagrama, cada nota sabe su lugar perfecto para brillar. ¡Ahora tú también conoces el secreto de la música!',
                 'icon' => '🎶',
                 'bg' => 'from-teal-400 to-emerald-500',
                 'character' => '⭐'

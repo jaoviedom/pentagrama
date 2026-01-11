@@ -13,7 +13,7 @@ class CreatePlayer extends Component
     public $pin;
     public $pin_confirmation;
 
-    public $avatars = ['🐶', '🐱', '🐒', '🐰', '🐻', '🦁', '🐘', '🦒', '🦓', '🐼', '🐨', '🐯'];
+    public $avatars = ['🐶', '🐱', '🐒', '🐰', '🐻', '🦁', '🐘', '🦒', '🦓', '🐼', '🐨', '🐯', '🦄', '🐲', '🦖', '🦊'];
     public $colors = [
         '#ef4444', // red-500
         '#f97316', // orange-500

@@ -15,6 +15,14 @@ class LessonsMenu extends Component
         $this->view = $view;
     }
 
+    public function logout()
+    {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/');
+    }
+
     public function render()
     {
         return view('livewire.game.lessons-menu');
