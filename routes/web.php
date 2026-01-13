@@ -14,7 +14,7 @@ Route::get('/', function () {
     
     // Si es el guardián, lo mandamos al dashboard
     return redirect()->route('dashboard');
-});
+})->name('welcome');
 
 // Rutas de autenticación (solo para invitados)
 Route::middleware('guest')->group(function () {

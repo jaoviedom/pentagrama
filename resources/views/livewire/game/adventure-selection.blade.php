@@ -43,10 +43,14 @@
         </div>
 
         <!-- Botón Volver / Cambiar Jugador -->
-        <div class="mt-16 text-center">
+        <div class="mt-16 text-center flex flex-col md:flex-row items-center justify-center gap-6">
             <a href="{{ route('players.index') }}" class="inline-flex items-center gap-2 text-gray-400 hover:text-purple-600 font-black text-lg transition-colors group">
                 <span class="bg-white p-3 rounded-2xl shadow-md border-b-4 border-gray-200 group-active:border-b-0 group-active:translate-y-1">👤 Cambiar de aventurero</span>
             </a>
+            
+            <button wire:click="logout" class="inline-flex items-center gap-2 text-gray-400 hover:text-red-500 font-black text-lg transition-colors group">
+                <span class="bg-white p-3 rounded-2xl shadow-md border-b-4 border-gray-200 group-active:border-b-0 group-active:translate-y-1">🚪 Salir de la aventura</span>
+            </button>
         </div>
     </div>
 

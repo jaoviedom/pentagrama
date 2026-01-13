@@ -25,6 +25,7 @@ class GameEngine extends Component
     public $stars = 0;
     public $hint = null;
     public $startTime;
+    public $isLastLevel = false;
     public $names = ['C' => 'Do', 'D' => 'Re', 'E' => 'Mi', 'F' => 'Fa', 'G' => 'Sol', 'A' => 'La', 'B' => 'Si'];
 
     /**
@@ -47,6 +48,14 @@ class GameEngine extends Component
 
         $this->world = $world;
         $this->level = (int)$level;
+        
+        // Validación de nivel máximo: si intentan ir más allá de 60, al mapa
+        $maxLevels = GameService::WORLDS[$this->world]['levels'] ?? 60;
+        if ($this->level > $maxLevels) {
+            return redirect()->route('game.map');
+        }
+
+        $this->isLastLevel = ($this->level >= $maxLevels);
         
         $this->initGame();
     }
@@ -194,6 +203,11 @@ class GameEngine extends Component
         $rewardCode = $gameService->checkRewards($this->player, $this->world, $this->level);
         if ($rewardCode) {
             $this->dispatch('show-reward', rewardCode: $rewardCode);
+        }
+
+        // Si es el último nivel, disparamos confetti
+        if ($this->isLastLevel) {
+            $this->dispatch('celebrate-victory');
         }
     }
 

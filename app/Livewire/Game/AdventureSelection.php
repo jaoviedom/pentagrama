@@ -28,6 +28,14 @@ class AdventureSelection extends Component
         return redirect()->route('game.map');
     }
 
+    public function logout()
+    {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/');
+    }
+
     public function render()
     {
         return view('livewire.game.adventure-selection');

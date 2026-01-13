@@ -102,9 +102,15 @@
         @if($gameState === 'won')
             <div class="fixed inset-0 bg-purple-900/90 backdrop-blur-xl z-50 flex items-center justify-center p-6 animate-fade-in">
                 <div class="bg-white rounded-[4rem] p-10 md:p-16 max-w-2xl w-full text-center shadow-2xl border-b-[16px] border-purple-200">
-                    <div class="text-[8rem] mb-6 animate-bounce">🏆</div>
-                    <h2 class="text-6xl font-black text-purple-600 mb-4">¡SÚPER BIEN!</h2>
-                    <p class="text-2xl font-bold text-gray-500 mb-10 text-pretty">¡Has dominado el Nivel {{ $level }} como un Mozart!</p>
+                    <div class="text-[8rem] mb-6 animate-bounce">{{ $isLastLevel ? '🎓' : '🏆' }}</div>
+                    
+                    @if($isLastLevel)
+                        <h2 class="text-5xl font-black text-purple-600 mb-4 leading-tight">¡MAESTRÍA COMPLETADA!</h2>
+                        <p class="text-2xl font-bold text-gray-500 mb-10 text-pretty">Has culminado todos los retos de la {{ $world === 'sol' ? 'Clave de Sol' : 'Clave de Fa' }}. ¡Eres una leyenda!</p>
+                    @else
+                        <h2 class="text-6xl font-black text-purple-600 mb-4">¡SÚPER BIEN!</h2>
+                        <p class="text-2xl font-bold text-gray-500 mb-10 text-pretty">¡Has dominado el Nivel {{ $level }} como un Mozart!</p>
+                    @endif
                     
                     <div class="flex justify-center gap-4 mb-12">
                         @for($i = 1; $i <= 3; $i++)
@@ -117,9 +123,16 @@
                         <button wire:click="initGame" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-black py-6 rounded-3xl text-2xl transition-all border-b-4 border-gray-300">
                             Repetir 🔄
                         </button>
-                        <button wire:click="nextLevel" class="flex-[2] bg-gradient-to-r from-purple-500 to-pink-500 text-white font-black py-8 rounded-3xl text-3xl shadow-xl border-b-8 border-purple-800 transition-all hover:scale-105 active:translate-y-4 active:border-b-0">
-                            ¡SIGUIENTE NIVEL! 🚀
-                        </button>
+                        
+                        @if($isLastLevel)
+                            <a href="{{ route('game.map') }}" class="flex-[2] bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-black py-8 rounded-3xl text-3xl shadow-xl border-b-8 border-orange-700 transition-all hover:scale-105 active:translate-y-4 active:border-b-0 flex items-center justify-center">
+                                VOLVER AL MAPA 🌎
+                            </a>
+                        @else
+                            <button wire:click="nextLevel" class="flex-[2] bg-gradient-to-r from-purple-500 to-pink-500 text-white font-black py-8 rounded-3xl text-3xl shadow-xl border-b-8 border-purple-800 transition-all hover:scale-105 active:translate-y-4 active:border-b-0">
+                                ¡SIGUIENTE NIVEL! 🚀
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -144,14 +157,12 @@
         @endif
     </div>
 
-    <!-- Sonidos de Piano Real (Samples) -->
+    <!-- Confetti y Efectos Visuales -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script>
         function playPianoNote(pitch) {
             if (!pitch) return;
-            
-            // Usamos muestras reales de un piano de cola acústico
             const url = `https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/${pitch}.mp3`;
-            
             const audio = new Audio(url);
             audio.play().catch(e => console.error("Error al reproducir piano:", e));
         }
@@ -163,6 +174,29 @@
             });
             Livewire.on('playErrorSound', () => console.log('❌ Error!'));
             Livewire.on('playHintSound', () => console.log('🔍 Pista...'));
+
+            // Escuchador de Celebración Final
+            Livewire.on('celebrate-victory', () => {
+                const duration = 5 * 1000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                const interval = setInterval(function() {
+                    const timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                    confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                }, 250);
+            });
         });
     </script>
 
