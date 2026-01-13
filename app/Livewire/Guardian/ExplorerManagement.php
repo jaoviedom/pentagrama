@@ -144,7 +144,7 @@ class ExplorerManagement extends Component
 
         return view('livewire.guardian.explorer-management', [
             'players' => $players,
-            'totalLevels' => 100
+            'totalLevels' => 120
         ]);
     }
 }

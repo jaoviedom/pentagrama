@@ -18,12 +18,12 @@ class GameService
         'sol' => [
             'name' => 'Clave de Sol',
             'color' => 'purple',
-            'levels' => 50
+            'levels' => 60
         ],
         'fa' => [
             'name' => 'Clave de Fa',
             'color' => 'blue',
-            'levels' => 50
+            'levels' => 60
         ]
     ];
 
@@ -100,7 +100,7 @@ class GameService
         $newRewardCode = null;
 
         // 1. Hitos acumulativos (Retrospectivo): Asegura que si el niño ya pasó el nivel, reciba su medalla específica del mundo
-        $milestoneLevels = [10, 20, 30, 40];
+        $milestoneLevels = [10, 20, 30, 40, 60];
         
         foreach ($milestoneLevels as $mLevel) {
             $code = "{$world}_level_{$mLevel}";
@@ -169,18 +169,30 @@ class GameService
      */
     public function generateLevelNotes(string $world, int $level): array
     {
-        // Banco de notas Clave de Sol (Registro central y agudo)
+        // Banco de notas Clave de Sol (Registro central y agudo básico)
         $notesSol = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'];
+        // Registro Sobreagudo (5ª línea a 9ª línea - Ledger lines above)
+        $notesSolHigh = ['F5', 'G5', 'A5', 'B5', 'C6', 'D6', 'E6', 'F6', 'G6'];
         
-        // Banco de notas Clave de Fa (Registro grave y medio)
+        // Banco de notas Clave de Fa (Registro grave y medio básico)
         $notesFaAll = ['G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
+        // Registro Sobreagudo Fa (5ª línea a 9ª línea - Ledger lines above)
+        $notesFaHigh = ['A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 
         if ($world === 'sol') {
-            // Aumentamos el rango de notas disponibles gradualmente
-            $availableNotes = array_slice($notesSol, 0, min(count($notesSol), 2 + $level));
+            if ($level > 50) {
+                // Niveles 51-60: Enfoque en líneas adicionales superiores
+                $availableNotes = $notesSolHigh;
+            } else {
+                // Aumentamos el rango de notas disponibles gradualmente
+                $availableNotes = array_slice($notesSol, 0, min(count($notesSol), 2 + $level));
+            }
         } else {
-            // Lógica pedagógica para Clave de Fa (Dividida por registros)
-            if ($level <= 10) {
+            // Lógica pedagógica para Clave de Fa
+            if ($level > 50) {
+                // Niveles 51-60: Enfoque en líneas adicionales superiores
+                $availableNotes = $notesFaHigh;
+            } elseif ($level <= 10) {
                 // Fase 1: Registro Superior (Notas más fáciles de relacionar con Sol)
                 $availableNotes = ['D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
             } elseif ($level <= 20) {

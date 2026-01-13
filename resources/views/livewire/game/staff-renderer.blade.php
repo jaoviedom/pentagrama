@@ -1,5 +1,5 @@
 <div class="relative {{ $minimal ? 'px-12' : 'p-8 bg-white rounded-[3rem] shadow-xl border-4 border-purple-100' }} overflow-hidden">
-    <svg viewBox="0 -40 600 200" class="w-full h-auto drop-shadow-sm">
+    <svg viewBox="0 -100 600 270" class="w-full h-auto drop-shadow-sm">
         {{-- Estilos de Animación --}}
         <defs>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">

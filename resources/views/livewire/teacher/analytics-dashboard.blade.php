@@ -43,10 +43,10 @@
                         <div class="space-y-1">
                             <div class="flex justify-between text-sm font-bold">
                                 <span class="text-purple-600">Clave de Sol</span>
-                                <span class="text-gray-500">Nivel {{ $data['progress']['sol'] }}/50</span>
+                                <span class="text-gray-500">Nivel {{ $data['progress']['sol'] }}/60</span>
                             </div>
                             <div class="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-purple-500 rounded-full transition-all duration-1000" style="width: {{ ($data['progress']['sol'] / 50) * 100 }}%"></div>
+                                <div class="h-full bg-purple-500 rounded-full transition-all duration-1000" style="width: {{ ($data['progress']['sol'] / 60) * 100 }}%"></div>
                             </div>
                         </div>
 
@@ -54,10 +54,10 @@
                         <div class="space-y-1">
                             <div class="flex justify-between text-sm font-bold">
                                 <span class="text-blue-600">Clave de Fa</span>
-                                <span class="text-gray-500">Nivel {{ $data['progress']['fa'] }}/50</span>
+                                <span class="text-gray-500">Nivel {{ $data['progress']['fa'] }}/60</span>
                             </div>
                             <div class="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-blue-500 rounded-full transition-all duration-1000" style="width: {{ ($data['progress']['fa'] / 50) * 100 }}%"></div>
+                                <div class="h-full bg-blue-500 rounded-full transition-all duration-1000" style="width: {{ ($data['progress']['fa'] / 60) * 100 }}%"></div>
                             </div>
                         </div>
 
