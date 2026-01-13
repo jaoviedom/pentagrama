@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#FDFCF0] p-4 md:p-8 font-['Outfit',sans-serif]">
+<div class="min-h-screen bg-sky-50 p-4 md:p-8 font-['Outfit',sans-serif]">
     <div class="max-w-5xl mx-auto">
         <!-- Header - El Álbum -->
         <div class="bg-white rounded-[3rem] p-8 mb-12 shadow-[0_20px_0_0_#E5E7EB] border-4 border-gray-200 relative overflow-hidden">

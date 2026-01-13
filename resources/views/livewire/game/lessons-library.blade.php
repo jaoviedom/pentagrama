@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#FDFCF0] p-4 md:p-8 font-['Outfit',sans-serif] overflow-hidden relative">
+<div class="min-h-screen bg-sky-50 p-4 md:p-8 font-['Outfit',sans-serif] overflow-hidden relative">
     <!-- Decoración de Fondo -->
     <div class="fixed top-20 -left-20 w-80 h-80 bg-purple-200/50 rounded-full blur-3xl -z-10 animate-pulse"></div>
     <div class="fixed bottom-20 -right-20 w-80 h-80 bg-yellow-100/50 rounded-full blur-3xl -z-10 bounce-slow"></div>

@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#FDFCF0] font-['Outfit',sans-serif] flex items-center justify-center p-4">
+<div class="min-h-screen bg-sky-50 font-['Outfit',sans-serif] flex items-center justify-center p-4">
     <div class="max-w-4xl w-full">
         <!-- Saludo Inicial -->
         <div class="text-center mb-12 animate-fade-in-down">

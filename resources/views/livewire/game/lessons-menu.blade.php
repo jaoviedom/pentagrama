@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#FDFCF0] font-['Outfit',sans-serif]">
+<div class="min-h-screen bg-sky-50 font-['Outfit',sans-serif]">
     
     @if($view === 'menu')
         <div class="max-w-6xl mx-auto p-4 md:p-8">

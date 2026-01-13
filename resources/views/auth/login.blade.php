@@ -4,7 +4,7 @@
             <!-- Logo o Título -->
             <div class="text-center mb-8">
                 <h1 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
-                    🎵 Pentagrama
+                    🎵 Exploradores del Pentagrama
                 </h1>
                 <p class="text-gray-600 text-lg">App Educativa Infantil</p>
             </div>

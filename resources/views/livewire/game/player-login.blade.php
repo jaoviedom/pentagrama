@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#FDFCF0] flex items-center justify-center p-4 font-['Outfit',sans-serif]">
+<div class="min-h-screen bg-sky-50 flex items-center justify-center p-4 font-['Outfit',sans-serif]">
     <div class="max-w-xl w-full">
         
         <!-- Contenedor Principal -->

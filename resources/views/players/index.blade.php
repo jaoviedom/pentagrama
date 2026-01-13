@@ -1,5 +1,5 @@
 <x-layouts.app title="Seleccionar Jugador - Exploradores del Pentagrama">
-    <div class="min-h-screen p-8 bg-[#FDFCF0] flex flex-col items-center justify-center font-['Outfit',sans-serif]">
+    <div class="min-h-screen p-8 bg-sky-50 flex flex-col items-center justify-center font-['Outfit',sans-serif]">
         <!-- Cabecera Amigable -->
         <div class="text-center mb-12 animate-fade-in-down">
             <h1 class="text-5xl font-black text-gray-800 tracking-tight mb-4">¿Quién va a jugar ahora?</h1>

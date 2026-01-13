@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="bg-[#FDFCF0] font-['Outfit',sans-serif] min-h-screen flex items-center justify-center p-4 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-100/50 via-transparent to-orange-50/50 overflow-hidden">
+    <body class="bg-sky-50 font-['Outfit',sans-serif] min-h-screen flex items-center justify-center p-4 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-100/50 via-transparent to-orange-50/50 overflow-hidden">
         
         <main class="max-w-5xl w-full flex flex-col justify-center py-2">
             <!-- Título Hero con Logo -->
