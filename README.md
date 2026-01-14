@@ -1,59 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎵 Exploradores del Pentagrama
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![PHP Version](https://img.shields.io/badge/PHP-8.4%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Laravel Version](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
 
-## About Laravel
+**Exploradores del Pentagrama** es una plataforma educativa gamificada diseñada para transformar el aprendizaje musical en una aventura interactiva. A través de un sistema de roles, los "Guardianes" (docentes/padres) supervisan el progreso, mientras que los "Exploradores" (alumnos) dominan el lenguaje musical superando desafíos, lecciones y minijuegos en el pentagrama.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Funcionalidades Clave
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **🎮 Gamificación Educativa**: Lecciones inmersivas, desafíos cronometrados (`Speed Challenge`) y un sistema de recompensas con trofeos.
+- **👥 Gestión de Roles**: Panel de control exclusivo para el **Guardián** y una interfaz de aventura simplificada para el **Jugador**.
+- **⚡ Interactividad en Tiempo Real**: Construido con **Livewire** y **Alpine.js** para una experiencia de usuario fluida y reactiva sin recargas de página.
+- **📈 Seguimiento de Progreso**: Registro detallado de la evolución de cada jugador, con métricas de desempeño y logros desbloqueables.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 💻 Stack Técnico
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Este proyecto utiliza las tecnologías más recientes del ecosistema Laravel:
 
-## Laravel Sponsors
+| Tecnología | Versión / Detalle |
+|------------|-------------------|
+| **Backend** | Laravel 12, PHP 8.4 |
+| **Frontend** | Blade, Livewire 3, Tailwind CSS 4 |
+| **Base de Datos** | SQLite (Por defecto) / MySQL Compatible |
+| **Testing** | Pest PHP |
+| **Herramientas** | Laravel Pail (Logs), Vite (Build Tool) |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 📋 Requisitos del Sistema
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Antes de comenzar, asegúrate de tener instalado en tu entorno local:
 
-## Contributing
+- **PHP** >= 8.4
+- **Composer** (Gestor de dependencias PHP)
+- **Node.js** & **npm** (Para compilar assets)
+- Extensiones PHP requeridas por Laravel (BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🛠️ Instalación Paso a paso
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Sigue estos pasos para levantar el proyecto en tu entorno local:
 
-## Security Vulnerabilities
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/exploradores-pentagrama.git
+cd exploradores-pentagrama
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Instalar dependencias de Backend
+```bash
+composer install
+```
 
-## License
+### 3. Configurar entorno
+Duplica el archivo de ejemplo y configura tus variables de entorno.
+```bash
+cp .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> [!TIP]
+> Por defecto, el proyecto está configurado para usar `SQLite`, por lo que no necesitas instalar un servidor de base de datos externo para empezar.
+
+### 4. Generar clave de aplicación
+```bash
+php artisan key:generate
+```
+
+### 5. Preparar la base de datos
+Crea el archivo de base de datos (si usas SQLite) y ejecuta las migraciones:
+```bash
+touch database/database.sqlite
+php artisan migrate --seed
+```
+
+### 6. Instalar dependencias de Frontend y Compilar
+```bash
+npm install
+npm run build
+```
+
+### 7. Enlace simbólico para Storage
+Para visualizar imágenes y avatares correctamente:
+```bash
+php artisan storage:link
+```
+
+---
+
+## ⚙️ Configuración de Servicios
+
+### Base de Datos
+La configuración se encuentra en el archivo `.env`. Si deseas usar MySQL en lugar de SQLite:
+
+```properties
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mi_base_de_datos
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### Colas (Queue Workers)
+Para procesar tareas en segundo plano (ej: procesamiento de logros), ejecuta el worker:
+
+```bash
+php artisan queue:listen
+```
+
+---
+
+## 🖥️ Scripts de Desarrollo
+
+Para iniciar el servidor de desarrollo y la compilación de assets en caliente (HMR), puedes usar los siguientes comandos en terminales separadas:
+
+**Servidor Laravel:**
+```bash
+php artisan serve
+```
+
+**Vite (Assets Frontend):**
+```bash
+npm run dev
+```
+
+> [!NOTE]
+> Laravel 12 incluye un script `dev` en `composer.json` que ejecuta todo con `concurrently` (si está configurado), o puedes correrlos manualmente.
+
+---
+
+## 🧪 Testing
+
+El proyecto utiliza **Pest PHP** para pruebas unitarias y de características.
+
+Ejecutar todos los tests:
+```bash
+php artisan test
+# O directamente con el binario de Pest
+./vendor/bin/pest
+```
+
+---
+
+## 📄 Licencia
+
+Este proyecto es software propietario. Todos los derechos reservados. No se permite la distribución ni modificación sin autorización explícita.
