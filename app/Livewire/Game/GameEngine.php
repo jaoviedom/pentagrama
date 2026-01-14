@@ -9,6 +9,12 @@ use Livewire\Attributes\On;
 
 /**
  * Motor de Juego Principal: Controla el flujo de las lecciones interactivas.
+ * 
+ * Este componente gestiona el estado de la partida, la validación de notas,
+ * el sistema de vidas, estrellas y el registro pedagógico del progreso.
+ * 
+ * @example
+ * <livewire:game.game-engine :world="'pentagrama'" :level="1" />
  */
 class GameEngine extends Component
 {
@@ -16,7 +22,7 @@ class GameEngine extends Component
     public $player;
     public $world;
     public $level;
-    
+
     // Estado de la Partida
     public $notes = [];
     public $currentIndex = 0;
@@ -30,6 +36,10 @@ class GameEngine extends Component
 
     /**
      * Inicialización del componente con validación de seguridad.
+     * 
+     * @param string $world El identificador del mundo de juego.
+     * @param int|string $level El número del nivel a cargar.
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     public function mount($world, $level)
     {
@@ -37,9 +47,9 @@ class GameEngine extends Component
         if (!$playerId) {
             return redirect()->route('players.index');
         }
-        
+
         $this->player = Player::find($playerId);
-        
+
         // Verificación de integridad: si el jugador no existe por alguna razón
         if (!$this->player) {
             session()->forget('active_player_id');
@@ -47,8 +57,8 @@ class GameEngine extends Component
         }
 
         $this->world = $world;
-        $this->level = (int)$level;
-        
+        $this->level = (int) $level;
+
         // Validación de nivel máximo: si intentan ir más allá de 60, al mapa
         $maxLevels = GameService::WORLDS[$this->world]['levels'] ?? 60;
         if ($this->level > $maxLevels) {
@@ -56,7 +66,7 @@ class GameEngine extends Component
         }
 
         $this->isLastLevel = ($this->level >= $maxLevels);
-        
+
         $this->initGame();
     }
 
@@ -97,10 +107,16 @@ class GameEngine extends Component
 
     /**
      * Procesa la respuesta del usuario y actualiza el estado del juego.
+     * 
+     * @param string $pitch El tono o nota enviada por el usuario (ej. 'C4').
+     * @return void
+     * @example
+     * $this->submitNote('C4');
      */
     public function submitNote($pitch)
     {
-        if ($this->gameState !== 'playing') return;
+        if ($this->gameState !== 'playing')
+            return;
 
         $expectedNoteData = $this->notes[$this->currentIndex];
         $expectedPitch = $expectedNoteData['pitch'];
@@ -111,7 +127,7 @@ class GameEngine extends Component
 
         // En niveles avanzados (>30) validamos la octava exacta. 
         // En niveles básicos validamos solo el nombre de la nota.
-        $isCorrect = ($this->level > 30) 
+        $isCorrect = ($this->level > 30)
             ? ($pitch === $expectedPitch)
             : ($submittedNoteName === $expectedNoteName);
 
@@ -132,7 +148,7 @@ class GameEngine extends Component
         $this->notes[$this->currentIndex]['highlighted'] = true;
         // Revelamos la nota si estaba oculta (niveles avanzados)
         $this->notes[$this->currentIndex]['hidden'] = false;
-        
+
         $this->currentIndex++;
         $this->dispatch('playSuccessSound', pitch: $expectedPitch);
 
@@ -165,7 +181,7 @@ class GameEngine extends Component
                 'event_type' => 'error',
                 'data' => ['pitch' => $this->notes[$this->currentIndex]['pitch']]
             ]);
-            
+
             if ($this->lives <= 0) {
                 $this->gameState = 'lost';
             }
@@ -178,9 +194,9 @@ class GameEngine extends Component
     protected function finalizeWin()
     {
         $this->gameState = 'won';
-        
+
         // Puntuación de estrellas basada en el rendimiento
-        $this->stars = match($this->lives) {
+        $this->stars = match ($this->lives) {
             3 => 3,
             2 => 2,
             default => 1,
@@ -220,7 +236,7 @@ class GameEngine extends Component
     public function nextLevel()
     {
         return redirect()->route('game.lesson', [
-            'world' => $this->world, 
+            'world' => $this->world,
             'level' => $this->level + 1
         ]);
     }

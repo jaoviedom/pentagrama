@@ -6,11 +6,26 @@ use App\Models\Player;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 
+/**
+ * Componente Livewire para la gestión de exploradores (jugadores).
+ * 
+ * Permite a los guardianes crear, editar, eliminar y seleccionar exploradores.
+ * 
+ * @example
+ * <livewire:guardian.explorer-management />
+ */
 class ExplorerManagement extends Component
 {
+    /** @var bool Controla la visibilidad del modal de creación. */
     public $showCreateModal = false;
+
+    /** @var bool Controla la visibilidad del modal de edición. */
     public $showEditModal = false;
+
+    /** @var bool Controla la visibilidad de la confirmación de eliminación. */
     public $confirmingDeletion = false;
+
+    /** @var int|null ID del jugador a eliminar. */
     public $playerIdToDelete;
 
     // Form fields
@@ -71,6 +86,17 @@ class ExplorerManagement extends Component
         $this->resetForm();
     }
 
+    /**
+     * Crea un nuevo perfil de explorador vinculado al usuario autenticado.
+     * 
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException Si los datos del formulario no son válidos.
+     * @example
+     * // Dentro del componente:
+     * $this->nickname = 'Pianista';
+     * $this->pin = '1234';
+     * $this->createPlayer();
+     */
     public function createPlayer()
     {
         $this->validate();
@@ -137,9 +163,11 @@ class ExplorerManagement extends Component
     public function render()
     {
         $players = auth()->user()->players()
-            ->withCount(['progress as completed_lessons' => function($query) {
-                $query->where('is_completed', true);
-            }])
+            ->withCount([
+                'progress as completed_lessons' => function ($query) {
+                    $query->where('is_completed', true);
+                }
+            ])
             ->get();
 
         return view('livewire.guardian.explorer-management', [
