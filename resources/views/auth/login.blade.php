@@ -1,9 +1,10 @@
-<x-layouts.app title="Iniciar Sesión - Pentagrama">
+<x-layouts.app title="Iniciar Sesión - Exploradores del Pentagrama">
     <div class="min-h-screen flex items-center justify-center p-4">
         <div class="w-full max-w-md">
             <!-- Logo o Título -->
             <div class="text-center mb-8">
-                <h1 class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+                <h1
+                    class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
                     🎵 Exploradores del Pentagrama
                 </h1>
                 <p class="text-gray-600 text-lg">App Educativa Infantil</p>
@@ -27,16 +28,10 @@
                         <label for="username" class="block text-sm font-bold text-gray-700 mb-2">
                             👤 Nombre de Usuario
                         </label>
-                        <input 
-                            type="text" 
-                            id="username" 
-                            name="username" 
-                            value="{{ old('username') }}"
-                            required 
+                        <input type="text" id="username" name="username" value="{{ old('username') }}" required
                             autofocus
                             class="w-full px-4 py-3 border-2 border-purple-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all text-lg"
-                            placeholder="Escribe tu usuario"
-                        >
+                            placeholder="Escribe tu usuario">
                     </div>
 
                     <!-- Password -->
@@ -44,37 +39,34 @@
                         <label for="password" class="block text-sm font-bold text-gray-700 mb-2">
                             🔒 Contraseña
                         </label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            required
+                        <input type="password" id="password" name="password" required
                             class="w-full px-4 py-3 border-2 border-purple-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-200 focus:border-purple-500 transition-all text-lg"
-                            placeholder="Escribe tu contraseña"
-                        >
+                            placeholder="Escribe tu contraseña">
                     </div>
 
                     <!-- Remember Me -->
                     <div class="flex items-center">
-                        <input 
-                            type="checkbox" 
-                            id="remember" 
-                            name="remember"
-                            class="w-5 h-5 text-purple-600 border-2 border-purple-300 rounded focus:ring-purple-500"
-                        >
+                        <input type="checkbox" id="remember" name="remember"
+                            class="w-5 h-5 text-purple-600 border-2 border-purple-300 rounded focus:ring-purple-500">
                         <label for="remember" class="ml-2 text-sm font-semibold text-gray-700">
                             Recordarme
                         </label>
                     </div>
 
                     <!-- Submit Button -->
-                    <button 
-                        type="submit"
-                        class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-4 px-6 rounded-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-200 shadow-lg text-lg"
-                    >
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-4 px-6 rounded-xl hover:from-purple-600 hover:to-pink-600 transform hover:scale-105 transition-all duration-200 shadow-lg text-lg">
                         🚀 Entrar
                     </button>
                 </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600">
+                        ¿No tienes cuenta?
+                        <a href="{{ route('register') }}" class="text-pink-600 font-bold hover:underline">Regístrate
+                            aquí</a>
+                    </p>
+                </div>
             </div>
 
             <!-- Footer -->

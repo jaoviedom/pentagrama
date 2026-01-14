@@ -5,13 +5,14 @@ use App\Http\Controllers\AuthController;
 
 // Ruta principal - muestra la pantalla de selección o el dashboard
 Route::get('/', function () {
-    if (!auth()->check()) return view('welcome');
-    
+    if (!auth()->check())
+        return view('welcome');
+
     // Si es un niño jugando, lo mandamos a la selección de aventura
     if (session('active_player_id')) {
         return redirect()->route('game.selection');
     }
-    
+
     // Si es el guardián, lo mandamos al dashboard
     return redirect()->route('dashboard');
 })->name('welcome');
@@ -20,6 +21,8 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
     Route::get('/aventura', \App\Livewire\Game\PlayerLogin::class)->name('game.player-login');
 });
 
@@ -64,6 +67,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/player/profile', function () {
         return view('game.profile');
     })->name('game.profile');
-    
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

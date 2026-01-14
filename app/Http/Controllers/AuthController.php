@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            
+
             return redirect()->intended('/dashboard');
         }
 
@@ -49,5 +49,37 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Mostrar el formulario de registro
+     */
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    /**
+     * Procesar el registro
+     */
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'nombre_completo' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = User::create([
+            'nombre_completo' => $data['nombre_completo'],
+            'username' => $data['username'],
+            'password' => $data['password'], // Automáticamente hasheado por el cast en el modelo
+            'rol' => 'profesor',
+            'activo' => true,
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('dashboard');
     }
 }
