@@ -1,4 +1,5 @@
-<div class="relative {{ $minimal ? 'px-12' : 'p-8 bg-white rounded-[3rem] shadow-xl border-4 border-purple-100' }} overflow-hidden">
+<div
+    class="relative {{ $minimal ? 'px-12' : 'p-4 bg-white rounded-[2rem] shadow-xl border-4 border-purple-100' }} overflow-hidden">
     <svg viewBox="0 -100 600 270" class="w-full h-auto drop-shadow-sm">
         {{-- Estilos de Animación --}}
         <defs>
@@ -11,10 +12,12 @@
         {{-- Clave Musical (Posicionamiento Técnico Real) --}}
         @if($clef === 'sol')
             {{-- Centrada en la 2da línea del pentagrama (Sol) --}}
-            <text x="10" y="88" style="font-size: 150px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄞</text>
+            <text x="10" y="88" style="font-size: 150px;"
+                class="fill-purple-300 font-serif select-none pointer-events-none">𝄞</text>
         @else
             {{-- Centrada en la 4ta línea del pentagrama (Fa) --}}
-            <text x="10" y="75" style="font-size: 125px;" class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
+            <text x="10" y="75" style="font-size: 125px;"
+                class="fill-purple-300 font-serif select-none pointer-events-none">𝄢</text>
         @endif
 
         {{-- Líneas Principales del Pentagrama --}}
@@ -30,9 +33,9 @@
         @if($interactive)
             @foreach($this->getMapping() as $pitch => $p)
                 @php $yPos = 80 - ($p * 10); @endphp
-                <rect x="0" y="{{ $yPos - 10 }}" width="600" height="20" 
-                      class="fill-transparent hover:fill-blue-500/10 cursor-pointer transition-colors"
-                      wire:click="emitNoteClick('{{ $pitch }}')" />
+                <rect x="0" y="{{ $yPos - 10 }}" width="600" height="20"
+                    class="fill-transparent hover:fill-blue-500/10 cursor-pointer transition-colors"
+                    wire:click="emitNoteClick('{{ $pitch }}')" />
             @endforeach
         @endif
 
@@ -45,38 +48,35 @@
                 $x = 100 + ($index * 60);
             @endphp
 
-            <g class="transition-all duration-500 ease-out animate-appear" 
-               style="animation-delay: {{ $index * 0.2 }}s">
-                
+            <g class="transition-all duration-500 ease-out animate-appear" style="animation-delay: {{ $index * 0.2 }}s">
+
                 {{-- Líneas adicionales dinámicas (Solo las necesarias para esta nota) --}}
                 @if ($pos <= -2)
                     @for ($l = -2; $l >= $pos; $l -= 2)
-                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}" 
-                              stroke="currentColor" stroke-width="2" class="text-purple-600" />
+                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}"
+                            stroke="currentColor" stroke-width="2" class="text-purple-600" />
                     @endfor
                 @elseif ($pos >= 10)
                     @for ($l = 10; $l <= $pos; $l += 2)
-                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}" 
-                              stroke="currentColor" stroke-width="2" class="text-purple-600" />
+                        <line x1="{{ $x - 15 }}" y1="{{ 80 - ($l * 10) }}" x2="{{ $x + 15 }}" y2="{{ 80 - ($l * 10) }}"
+                            stroke="currentColor" stroke-width="2" class="text-purple-600" />
                     @endfor
                 @endif
 
                 {{-- Cabeza de la Nota (Solo si no está oculta) --}}
                 @if(!($note['hidden'] ?? false))
-                    <ellipse cx="{{ $x }}" cy="{{ $y }}" rx="8" ry="6"
-                             transform="rotate(-20 {{ $x }} {{ $y }})"
-                             class="{{ $note['highlighted'] ? 'text-yellow-400 fill-current' : 'text-purple-600 fill-current' }} transition-colors duration-300"
-                             @if($note['highlighted']) filter="url(#glow)" @endif
-                    />
+                    <ellipse cx="{{ $x }}" cy="{{ $y }}" rx="8" ry="6" transform="rotate(-20 {{ $x }} {{ $y }})"
+                        class="{{ $note['highlighted'] ? 'text-yellow-400 fill-current' : 'text-purple-600 fill-current' }} transition-colors duration-300"
+                        @if($note['highlighted']) filter="url(#glow)" @endif />
 
                     {{-- Plica (Stem) --}}
-                    <line x1="{{ $x + 7 }}" y1="{{ $y }}" x2="{{ $x + 7 }}" y2="{{ $y - 35 }}" 
-                          stroke="currentColor" stroke-width="1.5" class="text-purple-600" />
+                    <line x1="{{ $x + 7 }}" y1="{{ $y }}" x2="{{ $x + 7 }}" y2="{{ $y - 35 }}" stroke="currentColor"
+                        stroke-width="1.5" class="text-purple-600" />
                 @endif
-                
+
                 {{-- Etiqueta de la nota (Para aprendizaje) --}}
                 @if($showNames)
-                    <text x="{{ $x }}" y="{{ $y + 25 }}" text-anchor="middle" 
+                    <text x="{{ $x }}" y="{{ $y + 25 }}" text-anchor="middle"
                         class="text-[10px] font-black {{ $note['highlighted'] ? 'text-yellow-600' : 'text-purple-300' }} fill-current uppercase">
                         {{ $this->getNoteName($note['pitch']) }}
                     </text>
@@ -87,18 +87,28 @@
 
     {{-- Feedback Visual Inferior (Oculto en modo minimal) --}}
     @if(!$minimal)
-        <div class="mt-4 flex justify-center gap-2">
+        <div class="mt-2 flex justify-center gap-2">
             @foreach($activeNotes as $index => $note)
-                <div class="w-3 h-3 rounded-full transition-all duration-300 {{ $note['highlighted'] ? 'bg-yellow-400 scale-125 shadow-lg' : 'bg-purple-100' }}"></div>
+                <div
+                    class="w-3 h-3 rounded-full transition-all duration-300 {{ $note['highlighted'] ? 'bg-yellow-400 scale-125 shadow-lg' : 'bg-purple-100' }}">
+                </div>
             @endforeach
         </div>
     @endif
 
     <style>
         @keyframes appear {
-            from { opacity: 0; transform: scale(0.5) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
+
         .animate-appear {
             animation: appear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
         }
