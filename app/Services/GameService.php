@@ -136,18 +136,28 @@ class GameService
         if ($newRewardCode)
             return $newRewardCode;
 
-        // 3. Sistema de "Loot" Aleatorio (Personajes e Instrumentos)
-        // 10% de probabilidad de encontrar algo raro tras cualquier nivel
-        if (rand(1, 100) <= 10) {
-            $randomType = rand(0, 1) ? 'character' : 'instrument';
-            $randomReward = Reward::where('type', $randomType)
-                ->whereDoesntHave('players', fn($q) => $q->where('player_id', $player->id))
-                ->inRandomOrder()
-                ->first();
+        // 3. Sistema de Recompensas Fijas (Personajes e Instrumentos repartidos)
+        $fixedRewards = [
+            'sol' => [
+                15 => 'inst_piano',
+                25 => 'char_fox',
+                35 => 'inst_guitar',
+                55 => 'inst_violin',
+            ],
+            'fa' => [
+                15 => 'inst_drum',
+                25 => 'char_bear',
+                35 => 'inst_trumpet',
+                55 => 'char_lion',
+            ]
+        ];
 
-            if ($randomReward) {
-                $player->rewards()->attach($randomReward->id, ['earned_at' => now()]);
-                return $randomReward->code;
+        if (isset($fixedRewards[$world][$level])) {
+            $code = $fixedRewards[$world][$level];
+            $reward = Reward::where('code', $code)->first();
+            if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
+                $player->rewards()->attach($reward->id, ['earned_at' => now()]);
+                return $code;
             }
         }
 
