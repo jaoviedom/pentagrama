@@ -11,7 +11,8 @@
                 <div>
                     <h1 class="text-4xl font-black text-indigo-900 uppercase tracking-tight">Cofre de Tesoros</h1>
                     <p class="text-indigo-400 font-bold uppercase text-xs tracking-widest">Colección mística de
-                        {{ $player->name }}</p>
+                        {{ $player->nickname }}
+                    </p>
                 </div>
             </div>
 
@@ -74,7 +75,9 @@
                                                     Ganado el {{ \Carbon\Carbon::parse($reward['earned_at'])->format('d/m/y') }}
                                                 </p>
                                             @else
-                                                <p class="text-[10px] font-bold text-slate-300 uppercase">Bloqueado</p>
+                                                <p class="text-[10px] font-bold text-slate-400 uppercase leading-tight italic">
+                                                    {{ $reward['description'] }}
+                                                </p>
                                             @endif
                                         </div>
                                     </div>

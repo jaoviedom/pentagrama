@@ -193,14 +193,17 @@ class GameService
 
         if ($world === 'sol') {
             if ($level > 70) {
-                // Niveles 71-80: Enfoque en líneas adicionales inferiores (F3-E4)
-                $availableNotes = ['F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4'];
-            } elseif ($level > 60) {
-                // Niveles 61-70: Rango completo para Piano
+                // Niveles 71-80: Desafío Final - Rango completo para Piano
                 $availableNotes = $notesSol;
+            } elseif ($level > 60) {
+                // Niveles 61-70: Iniciación al Piano - Enfoque en líneas adicionales inferiores (F3-E4)
+                $availableNotes = ['F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4'];
             } elseif ($level > 50) {
                 // Niveles 51-60: Enfoque en líneas adicionales superiores
                 $availableNotes = $notesSolHigh;
+            } elseif ($level >= 10 && $level <= 20) {
+                // Niveles 10-20: Concentración en la octava C4-C5
+                $availableNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
             } else {
                 // Aumentamos el rango de notas disponibles gradualmente
                 $availableNotes = array_slice($notesSol, 0, min(count($notesSol), 2 + $level));
@@ -208,20 +211,20 @@ class GameService
         } else {
             // Lógica pedagógica para Clave de Fa
             if ($level > 70) {
-                // Niveles 71-80: Enfoque en líneas adicionales inferiores (A1-G2)
-                $availableNotes = ['A1', 'B1', 'C2', 'D2', 'E2', 'F2', 'G2'];
-            } elseif ($level > 60) {
-                // Niveles 61-70: Rango completo para Piano
+                // Niveles 71-80: Desafío Final - Rango completo para Piano
                 $availableNotes = $notesFaAll;
+            } elseif ($level > 60) {
+                // Niveles 61-70: Iniciación al Piano - Enfoque en líneas adicionales inferiores (A1-G2)
+                $availableNotes = ['A1', 'B1', 'C2', 'D2', 'E2', 'F2', 'G2'];
             } elseif ($level > 50) {
                 // Niveles 51-60: Enfoque en líneas adicionales superiores
                 $availableNotes = $notesFaHigh;
-            } elseif ($level <= 10) {
+            } elseif ($level < 10) {
                 // Fase 1: Registro Superior (Notas más fáciles de relacionar con Sol)
                 $availableNotes = ['D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
             } elseif ($level <= 20) {
-                // Fase 2: Registro Inferior (Familiarización con las profundidades)
-                $availableNotes = ['G2', 'A2', 'B2', 'C3', 'D3'];
+                // Niveles 10-20: Concentración en la octava central Fa (C3-C4)
+                $availableNotes = ['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
             } else {
                 // Fase 3: Registro Completo
                 $availableNotes = $notesFaAll;
