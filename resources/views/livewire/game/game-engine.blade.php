@@ -93,7 +93,7 @@
                         </button>
                     @endforeach
                 </div>
-            @elseif($level >= 61 && $level <= 70)
+            @elseif($level >= 61 && $level <= 80)
                 <div class="animate-fade-in-up" x-data="{
                     playAndSubmit(pitch) {
                         const url = 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/' + pitch + '.mp3';

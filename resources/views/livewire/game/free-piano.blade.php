@@ -42,7 +42,7 @@
                 'activeNotes' => $lastNote ? [['pitch' => $lastNote, 'highlighted' => true]] : [],
                 'showNames' => true,
                 'minimal' => true
-            ], key('staff-'.$clef.'-'.($lastNote ?? 'none')))
+            ], key: 'staff-'.$clef.'-'.($lastNote ?? 'none'))
         </div>
         @if(!$lastNote)
             <div class="text-center mt-2 text-gray-300 font-black italic text-sm">Empieza a tocar... 🎼</div>
@@ -53,43 +53,42 @@
 
     <!-- El Teclado de Pantalla Completa -->
     <div class="flex-1 flex items-end justify-center w-full px-4 mb-4">
-        <div class="w-full bg-gray-800 p-6 md:p-10 rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] border-b-[24px] border-gray-900 relative overflow-hidden group">
+        <div class="w-full bg-gray-900 p-4 md:p-6 rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] border-b-[12px] border-gray-950 relative overflow-hidden group">
             
-            <div class="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-30">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
-                <span class="text-[10px] font-black text-white uppercase tracking-[0.5em]">Interactive Audio Surface</span>
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 flex items-center gap-2 opacity-30">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
+                <span class="text-[8px] font-black text-white uppercase tracking-[0.4em]">Interactive Audio Surface</span>
             </div>
 
-            <div class="flex justify-center pt-8 overflow-x-auto pb-4 scrollbar-hide">
+            <div class="flex justify-center pt-6 overflow-x-auto pb-2 scrollbar-hide">
                 @php
-                    $keysSol = [
-                        ['p' => 'B3', 'l' => 'Si'], ['p' => 'C4', 'l' => 'Do'], ['p' => 'D4', 'l' => 'Re'], 
-                        ['p' => 'E4', 'l' => 'Mi'], ['p' => 'F4', 'l' => 'Fa'], ['p' => 'G4', 'l' => 'Sol'], 
-                        ['p' => 'A4', 'l' => 'La'], ['p' => 'B4', 'l' => 'Si'], ['p' => 'C5', 'l' => 'Do↑'], 
-                        ['p' => 'D5', 'l' => 'Re↑'], ['p' => 'E5', 'l' => 'Mi↑'], ['p' => 'F5', 'l' => 'Fa↑'], 
-                        ['p' => 'G5', 'l' => 'Sol↑'], ['p' => 'A5', 'l' => 'La↑'], ['p' => 'B5', 'l' => 'Si↑']
+                    $pianoKeys = [
+                        'F1','G1','A1','B1',
+                        'C2','D2','E2','F2','G2','A2','B2',
+                        'C3','D3','E3','F3','G3','A3','B3',
+                        'C4','D4','E4','F4','G4','A4','B4',
+                        'C5','D5','E5','F5','G5','A5','B5',
+                        'C6','D6','E6'
                     ];
-                    $keysFa = [
-                        ['p' => 'B1', 'l' => 'Si'], ['p' => 'C2', 'l' => 'Do'], ['p' => 'D2', 'l' => 'Re'], 
-                        ['p' => 'E2', 'l' => 'Mi'], ['p' => 'F2', 'l' => 'Fa'], ['p' => 'G2', 'l' => 'Sol'], 
-                        ['p' => 'A2', 'l' => 'La'], ['p' => 'B2', 'l' => 'Si'], ['p' => 'C3', 'l' => 'Do↑'], 
-                        ['p' => 'D3', 'l' => 'Re↑'], ['p' => 'E3', 'l' => 'Mi↑'], ['p' => 'F3', 'l' => 'Fa↑'], 
-                        ['p' => 'G3', 'l' => 'Sol↑'], ['p' => 'A3', 'l' => 'La↑'], ['p' => 'B3', 'l' => 'Si↑']
-                    ];
-                    $currentKeys = $clef === 'sol' ? $keysSol : $keysFa;
                 @endphp
 
-                <div class="flex relative w-full h-[400px] md:h-[500px]">
-                    @foreach($currentKeys as $index => $key)
+                <div class="flex relative h-48 md:h-64">
+                    @foreach($pianoKeys as $index => $pitch)
+                        @php
+                            $hasBlack = in_array(substr($pitch, 0, 1), ['C', 'D', 'F', 'G', 'A']);
+                        @endphp
                         <button 
-                            @click="playNote('{{ $key['p'] }}')"
-                            class="flex-1 min-w-[50px] md:min-w-[65px] bg-white border-r-[1px] border-gray-100 first:rounded-l-3xl last:rounded-r-3xl shadow-inner transition-all hover:bg-gray-50 active:translate-y-4 active:shadow-none flex flex-col justify-end items-center pb-12 group/key relative"
+                            @click="playNote('{{ $pitch }}')"
+                            class="flex-1 min-w-[20px] md:min-w-[35px] bg-white border-r-[1px] border-gray-200 first:rounded-l-2xl last:rounded-r-2xl shadow-inner transition-all hover:bg-gray-50 active:bg-gray-200 relative group"
                         >
-                            
-                            {{-- Teclas Negras: Si empezamos en B(0), NO hay negra entre B(0) y C(1) --}}
-                            {{-- Las negras están: C-D(idx2), D-E(idx3), F-G(idx5), G-A(idx6), A-B(idx7), C-D(idx9), D-E(idx10), F-G(idx12), G-A(idx13), A-B(idx14) --}}
-                            @if(in_array($index, [2, 3, 5, 6, 7, 9, 10, 12, 13, 14]))
-                                <div class="absolute top-0 -left-[20px] md:-left-[25px] w-[40px] md:w-[50px] h-48 md:h-64 bg-gray-900 rounded-b-2xl shadow-2xl z-20 transition-all hover:scale-x-95 active:bg-gray-700"></div>
+                            @if($pitch === 'C4')
+                                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-400 rounded-full shadow-sm"></div>
+                            @endif
+
+                            @if($hasBlack)
+                                <div class="absolute top-0 -right-[10px] md:-right-[15px] w-[20px] md:w-[30px] h-28 md:h-40 bg-gray-900 rounded-b-lg z-20 pointer-events-auto hover:bg-black transition-colors shadow-xl"
+                                     @click.stop="playNote('{{ substr($pitch, 0, 1) . '#' . substr($pitch, 1) }}')">
+                                </div>
                             @endif
                         </button>
                     @endforeach

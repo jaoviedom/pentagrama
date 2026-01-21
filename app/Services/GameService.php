@@ -18,12 +18,12 @@ class GameService
         'sol' => [
             'name' => 'Clave de Sol',
             'color' => 'purple',
-            'levels' => 70
+            'levels' => 80
         ],
         'fa' => [
             'name' => 'Clave de Fa',
             'color' => 'blue',
-            'levels' => 70
+            'levels' => 80
         ]
     ];
 
@@ -100,7 +100,7 @@ class GameService
         $newRewardCode = null;
 
         // 1. Hitos acumulativos (Retrospectivo): Asegura que si el niño ya pasó el nivel, reciba su medalla específica del mundo
-        $milestoneLevels = [10, 20, 30, 40, 60, 70];
+        $milestoneLevels = [10, 20, 30, 40, 60, 70, 80];
 
         foreach ($milestoneLevels as $mLevel) {
             $code = "{$world}_level_{$mLevel}";
@@ -182,7 +182,10 @@ class GameService
         $notesFaHigh = ['A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 
         if ($world === 'sol') {
-            if ($level > 60) {
+            if ($level > 70) {
+                // Niveles 71-80: Enfoque en líneas adicionales inferiores (F3-E4)
+                $availableNotes = ['F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4'];
+            } elseif ($level > 60) {
                 // Niveles 61-70: Rango completo para Piano
                 $availableNotes = $notesSol;
             } elseif ($level > 50) {
@@ -194,7 +197,10 @@ class GameService
             }
         } else {
             // Lógica pedagógica para Clave de Fa
-            if ($level > 60) {
+            if ($level > 70) {
+                // Niveles 71-80: Enfoque en líneas adicionales inferiores (A1-G2)
+                $availableNotes = ['A1', 'B1', 'C2', 'D2', 'E2', 'F2', 'G2'];
+            } elseif ($level > 60) {
                 // Niveles 61-70: Rango completo para Piano
                 $availableNotes = $notesFaAll;
             } elseif ($level > 50) {
@@ -212,8 +218,8 @@ class GameService
             }
         }
 
-        // Longitud de la secuencia: escala de 3 a 8 notas según el nivel
-        $sequenceLength = min(10, 3 + floor($level / 3));
+        // Longitud de la secuencia: 10 notas para todos los niveles para mayor práctica
+        $sequenceLength = 10;
 
         $sequence = [];
         for ($i = 0; $i < $sequenceLength; $i++) {
@@ -222,7 +228,7 @@ class GameService
                 'pitch' => $note,
                 'highlighted' => false,
                 'status' => 'pending',
-                'hidden' => ($level > 30 && $level <= 50) // Niveles 31-50: el reto es ubicar la nota sin verla (en 61-70 se ven)
+                'hidden' => ($level > 30 && $level <= 60) // Niveles 31-60: el reto es ubicar la nota sin verla (en 61-80 se ven)
             ];
         }
 

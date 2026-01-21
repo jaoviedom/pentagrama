@@ -21,6 +21,7 @@ class RewardSeeder extends Seeder
             ['name' => 'Guardián de la Clave', 'description' => 'Nivel 40 en Clave de Sol', 'icon' => '🛡️', 'type' => 'medal', 'code' => 'sol_level_40'],
             ['name' => 'Maestro del Olimpo', 'description' => 'Nivel 60 en Clave de Sol', 'icon' => '🏛️', 'type' => 'medal', 'code' => 'sol_level_60'],
             ['name' => 'Virtuoso del Piano', 'description' => 'Nivel 70 en Clave de Sol', 'icon' => '🎹', 'type' => 'medal', 'code' => 'sol_level_70'],
+            ['name' => 'Gran Maestro de la Luz', 'description' => 'Nivel 80 en Clave de Sol', 'icon' => '✨', 'type' => 'medal', 'code' => 'sol_level_80'],
             ['name' => 'Leyenda del Sol', 'description' => 'Completa el mundo de Clave de Sol', 'icon' => '☀️', 'type' => 'medal', 'code' => 'world_sol_complete'],
 
             // Medallas Clave de Fa (Profundidades)
@@ -30,6 +31,7 @@ class RewardSeeder extends Seeder
             ['name' => 'Maestro Profundo', 'description' => 'Nivel 40 en Clave de Fa', 'icon' => '🧜', 'type' => 'medal', 'code' => 'fa_level_40'],
             ['name' => 'Titán del Abismo', 'description' => 'Nivel 60 en Clave de Fa', 'icon' => '🔱', 'type' => 'medal', 'code' => 'fa_level_60'],
             ['name' => 'Gran Pianista Bajo', 'description' => 'Nivel 70 en Clave de Fa', 'icon' => '🎼', 'type' => 'medal', 'code' => 'fa_level_70'],
+            ['name' => 'Señor de las Profundidades', 'description' => 'Nivel 80 en Clave de Fa', 'icon' => '🐙', 'type' => 'medal', 'code' => 'fa_level_80'],
             ['name' => 'Rey de los Graves', 'description' => 'Completa el mundo de Clave de Fa', 'icon' => '🐋', 'type' => 'medal', 'code' => 'world_fa_complete'],
 
             // Personajes (Avatares)
