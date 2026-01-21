@@ -18,12 +18,12 @@ class GameService
         'sol' => [
             'name' => 'Clave de Sol',
             'color' => 'purple',
-            'levels' => 60
+            'levels' => 70
         ],
         'fa' => [
             'name' => 'Clave de Fa',
             'color' => 'blue',
-            'levels' => 60
+            'levels' => 70
         ]
     ];
 
@@ -38,14 +38,14 @@ class GameService
         }
 
         $levelsCount = self::WORLDS[$worldCode]['levels'];
-        
+
         // Obtenemos todos los registros de progreso para este mundo (excluyendo retos especiales 99)
         $progressRecords = $player->progress()
             ->where('world', $worldCode)
             ->where('level', '<', 90)
             ->get()
             ->keyBy('level');
-        
+
         $map = [];
         $unlockedUntil = 1;
 
@@ -80,7 +80,7 @@ class GameService
     {
         // Actualizamos o creamos el registro de progreso
         $existing = Progress::where(['player_id' => $player->id, 'world' => $world, 'level' => $level])->first();
-        
+
         return Progress::updateOrCreate(
             ['player_id' => $player->id, 'world' => $world, 'level' => $level],
             [
@@ -100,23 +100,24 @@ class GameService
         $newRewardCode = null;
 
         // 1. Hitos acumulativos (Retrospectivo): Asegura que si el niño ya pasó el nivel, reciba su medalla específica del mundo
-        $milestoneLevels = [10, 20, 30, 40, 60];
-        
+        $milestoneLevels = [10, 20, 30, 40, 60, 70];
+
         foreach ($milestoneLevels as $mLevel) {
             $code = "{$world}_level_{$mLevel}";
-            
+
             // Si el jugador ha llegado o pasado este nivel en ESTE mundo específico
             $hasReached = Progress::where('player_id', $player->id)
                 ->where('world', $world)
                 ->where('level', '>=', $mLevel)
                 ->where('level', '<', 90)
                 ->exists();
-            
+
             if ($hasReached) {
                 $reward = Reward::where('code', $code)->first();
                 if ($reward && !$player->rewards()->where('reward_id', $reward->id)->exists()) {
                     $player->rewards()->attach($reward->id, ['earned_at' => now()]);
-                    if ($level == $mLevel) $newRewardCode = $code;
+                    if ($level == $mLevel)
+                        $newRewardCode = $code;
                 }
             }
         }
@@ -132,7 +133,8 @@ class GameService
             }
         }
 
-        if ($newRewardCode) return $newRewardCode;
+        if ($newRewardCode)
+            return $newRewardCode;
 
         // 3. Sistema de "Loot" Aleatorio (Personajes e Instrumentos)
         // 10% de probabilidad de encontrar algo raro tras cualquier nivel
@@ -169,18 +171,21 @@ class GameService
      */
     public function generateLevelNotes(string $world, int $level): array
     {
-        // Banco de notas Clave de Sol (Registro central y agudo básico)
-        $notesSol = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'];
+        // Banco de notas Clave de Sol (2 octavas: C4 a C6)
+        $notesSol = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6'];
         // Registro Sobreagudo (5ª línea a 9ª línea - Ledger lines above)
         $notesSolHigh = ['F5', 'G5', 'A5', 'B5', 'C6', 'D6', 'E6', 'F6', 'G6'];
-        
-        // Banco de notas Clave de Fa (Registro grave y medio básico)
-        $notesFaAll = ['G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
+
+        // Banco de notas Clave de Fa (2 octavas: C2 a C4)
+        $notesFaAll = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'];
         // Registro Sobreagudo Fa (5ª línea a 9ª línea - Ledger lines above)
         $notesFaHigh = ['A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
 
         if ($world === 'sol') {
-            if ($level > 50) {
+            if ($level > 60) {
+                // Niveles 61-70: Rango completo para Piano
+                $availableNotes = $notesSol;
+            } elseif ($level > 50) {
                 // Niveles 51-60: Enfoque en líneas adicionales superiores
                 $availableNotes = $notesSolHigh;
             } else {
@@ -189,7 +194,10 @@ class GameService
             }
         } else {
             // Lógica pedagógica para Clave de Fa
-            if ($level > 50) {
+            if ($level > 60) {
+                // Niveles 61-70: Rango completo para Piano
+                $availableNotes = $notesFaAll;
+            } elseif ($level > 50) {
                 // Niveles 51-60: Enfoque en líneas adicionales superiores
                 $availableNotes = $notesFaHigh;
             } elseif ($level <= 10) {
@@ -205,7 +213,7 @@ class GameService
         }
 
         // Longitud de la secuencia: escala de 3 a 8 notas según el nivel
-        $sequenceLength = min(8, 3 + floor($level / 3));
+        $sequenceLength = min(10, 3 + floor($level / 3));
 
         $sequence = [];
         for ($i = 0; $i < $sequenceLength; $i++) {
@@ -214,7 +222,7 @@ class GameService
                 'pitch' => $note,
                 'highlighted' => false,
                 'status' => 'pending',
-                'hidden' => $level > 30 // Niveles 31-40: el reto es ubicar la nota sin verla
+                'hidden' => ($level > 30 && $level <= 50) // Niveles 31-50: el reto es ubicar la nota sin verla (en 61-70 se ven)
             ];
         }
 

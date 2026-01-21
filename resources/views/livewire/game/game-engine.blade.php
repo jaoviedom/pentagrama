@@ -1,7 +1,7 @@
-<div class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-2 md:p-4 flex flex-col items-center justify-center">
+<div class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 md:p-2 flex flex-col items-center justify-center">
     <div class="max-w-5xl w-full">
         <!-- Dashboard Superior del Juego -->
-        <div class="flex flex-wrap justify-between items-center mb-2 bg-white/10 backdrop-blur-xl p-3 rounded-[1.5rem] border-2 border-white/20 shadow-2xl text-white">
+        <div class="flex flex-wrap justify-between items-center mb-1 bg-white/10 backdrop-blur-xl p-2 rounded-[1.5rem] border-2 border-white/20 shadow-2xl text-white">
             <div class="flex items-center gap-6">
                 <a href="{{ route('game.map') }}" class="w-14 h-14 bg-white/20 hover:bg-white/40 flex items-center justify-center rounded-2xl transition-all border-b-4 border-white/20 active:border-b-0 active:translate-y-1 text-2xl">
                     🏠
@@ -13,7 +13,7 @@
             </div>
 
             <!-- Vidas (Corazones animadores) -->
-            <div class="flex gap-3 bg-black/20 px-6 py-3 rounded-full border-2 border-white/10">
+            <div class="flex gap-2 bg-black/20 px-4 py-2 rounded-full border-2 border-white/10">
                 @for($i = 1; $i <= 3; $i++)
                     <span class="text-3xl transition-all duration-500 {{ $i <= $lives ? 'scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]' : 'grayscale opacity-30 scale-90' }}">
                         ❤️
@@ -30,13 +30,13 @@
         </div>
 
         <!-- Área Principal: Pentagrama -->
-        <div class="relative mb-4 group">
+        <div class="relative mb-2 group">
             <div class="absolute -inset-4 bg-gradient-to-r from-yellow-400 to-pink-500 rounded-[4rem] blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
             @livewire('game.staff-renderer', [
                 'clef' => $world, 
                 'activeNotes' => $notes,
                 'showNames' => ($world === 'sol') ? ($level <= 10) : ($level <= 20),
-                'interactive' => $level > 30
+                'interactive' => ($level > 30 && $level <= 60)
             ])
             
             @if($gameState === 'waiting')
@@ -50,17 +50,19 @@
             @endif
         </div>
 
-        <!-- Instrucción para niveles interactivos (31-50) -->
-        @if($gameState === 'playing' && $level > 30)
+        <!-- Instrucción para niveles interactivos (31-60) -->
+        @if($gameState === 'playing' && $level > 30 && $level < 61)
             <div class="mb-2 animate-fade-in text-center">
                 <div class="bg-white/10 backdrop-blur-md border-2 border-white/20 px-6 py-2 rounded-full inline-flex items-center gap-4 shadow-xl">
-                    <span class="text-white/60 font-black uppercase tracking-widest text-[10px]">Ubica la nota:</span>
-                    <h2 class="text-2xl font-black text-white drop-shadow-lg leading-none">
-                        {{ $names[substr($notes[$currentIndex]['pitch'], 0, 1)] }}
-                    </h2>
-                    <div class="w-px h-4 bg-white/20 ml-2"></div>
+                    @if($level < 61)
+                        <span class="text-white/60 font-black uppercase tracking-widest text-[10px]">Ubica la nota:</span>
+                        <h2 class="text-2xl font-black text-white drop-shadow-lg leading-none">
+                            {{ $names[substr($notes[$currentIndex]['pitch'], 0, 1)] }}
+                        </h2>
+                        <div class="w-px h-4 bg-white/20 ml-2"></div>
+                    @endif
                     <p class="text-white/80 text-xs font-black animate-pulse flex items-center gap-1">
-                        <span>👆</span> Toca el pentagrama
+                        <span>{{ $level >= 61 ? '🎹' : '👆' }}</span> {{ $level >= 61 ? 'Identifica la nota en el piano' : 'Toca el pentagrama' }}
                     </p>
                 </div>
 
@@ -91,8 +93,64 @@
                         </button>
                     @endforeach
                 </div>
+            @elseif($level >= 61 && $level <= 70)
+                <div class="animate-fade-in-up" x-data="{
+                    playAndSubmit(pitch) {
+                        const url = 'https://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/acoustic_grand_piano-mp3/' + pitch + '.mp3';
+                        new Audio(url).play().catch(e => console.warn(e));
+                        $wire.submitNote(pitch);
+                    }
+                }">
+                    <div class="bg-gray-800 p-1 md:p-2 rounded-2xl shadow-2xl border-b-[6px] border-gray-900 relative overflow-hidden overflow-x-auto">
+                        <div class="flex justify-center min-w-max h-24 md:h-32">
+                            @php
+                                $whiteNoteNames = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+                                $fullPiano = [];
+                                
+                                // Generar de F1 a E6
+                                for ($octave = 1; $octave <= 6; $octave++) {
+                                    foreach ($whiteNoteNames as $name) {
+                                        $pitch = $name . $octave;
+                                        
+                                        // Filtrar para empezar en F1 y terminar en E6
+                                        if ($octave == 1 && in_array($name, ['C', 'D', 'E'])) continue;
+                                        if ($octave == 6 && in_array($name, ['F', 'G', 'A', 'B'])) continue;
+                                        
+                                        $fullPiano[] = $pitch;
+                                    }
+                                }
+                            @endphp
+
+                            @foreach($fullPiano as $index => $p)
+                                <button 
+                                    @click="playAndSubmit('{{ $p }}')"
+                                    class="flex-1 min-w-[15px] md:min-w-[25px] bg-white border-r-[1px] border-gray-100 first:rounded-l-lg last:rounded-r-lg shadow-inner transition-all hover:bg-gray-50 active:translate-y-2 active:shadow-none flex flex-col justify-end items-center pb-2 group/key relative"
+                                >
+                                    @if($p === 'C4')
+                                        <div class="absolute bottom-4 w-2 h-2 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)] z-30"></div>
+                                    @endif
+
+                                    @php
+                                        $nameOnly = substr($p, 0, 1);
+                                        $hasBlackKey = in_array($nameOnly, ['C', 'D', 'F', 'G', 'A']);
+                                        // No poner negra después de la última nota (E6)
+                                        $isLast = ($p === 'E6');
+                                    @endphp
+
+                                    @if($hasBlackKey && !$isLast)
+                                        <div class="absolute top-0 -right-[7px] md:-right-[10px] w-[14px] md:w-[20px] h-16 md:h-20 bg-gray-900 rounded-b-sm shadow-lg z-20 pointer-events-none"></div>
+                                    @endif
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             @else
-                {{-- Instrucción inferior removida por redundancia para ahorrar espacio --}}
+                <div class="text-center animate-pulse">
+                    <p class="text-3xl font-black text-white/80">
+                        👆 Toca la <span class="text-yellow-300 underline">línea o espacio</span> correcto en el pentagrama
+                    </p>
+                </div>
             @endif
         @endif
 

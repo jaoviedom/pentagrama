@@ -85,7 +85,6 @@
                             @click="playNote('{{ $key['p'] }}')"
                             class="flex-1 min-w-[50px] md:min-w-[65px] bg-white border-r-[1px] border-gray-100 first:rounded-l-3xl last:rounded-r-3xl shadow-inner transition-all hover:bg-gray-50 active:translate-y-4 active:shadow-none flex flex-col justify-end items-center pb-12 group/key relative"
                         >
-                            <span class="text-[10px] md:text-xs font-black text-gray-300 group-hover/key:text-purple-400 transition-colors uppercase select-none">{{ $key['l'] }}</span>
                             
                             {{-- Teclas Negras: Si empezamos en B(0), NO hay negra entre B(0) y C(1) --}}
                             {{-- Las negras están: C-D(idx2), D-E(idx3), F-G(idx5), G-A(idx6), A-B(idx7), C-D(idx9), D-E(idx10), F-G(idx12), G-A(idx13), A-B(idx14) --}}
