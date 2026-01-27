@@ -27,10 +27,6 @@
             </div>
 
             <div class="flex gap-4 items-center">
-                <a href="{{ route('game.challenge', ['world' => $world]) }}"
-                    class="hidden md:flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-2xl font-black transition-all border-b-4 border-orange-600 hover:scale-105 active:border-b-0 active:translate-y-1">
-                    🏆 Reto
-                </a>
                 <a href="{{ route('game.speed-challenge', ['world' => $world]) }}"
                     class="hidden md:flex items-center gap-2 bg-gradient-to-r from-blue-400 to-indigo-400 text-white px-6 py-3 rounded-2xl font-black transition-all border-b-4 border-indigo-600 hover:scale-105 active:border-b-0 active:translate-y-1">
                     ⚡ Velocidad
@@ -85,7 +81,7 @@
                                 <!-- Botón de Nivel -->
                                 <button wire:click="playLevel({{ $level['level'] }})" {{ !$level['is_unlocked'] ? 'disabled' : '' }}
                                     class="relative z-10 w-24 h-24 rounded-3xl flex items-center justify-center text-3xl font-black transition-all transform hover:scale-110 active:scale-95 border-b-8 shadow-xl
-                                                    {{ $level['is_unlocked']
+                                                                {{ $level['is_unlocked']
                     ? ($level['is_completed']
                         ? ($world === 'sol' ? 'bg-purple-500 text-white border-purple-800' : 'bg-blue-500 text-white border-blue-800')
                         : 'bg-white text-gray-800 border-gray-200 hover:bg-gray-50')

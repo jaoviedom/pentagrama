@@ -11,7 +11,7 @@
 
 ## 🚀 Funcionalidades Clave
 
-- **🎮 Gamificación Educativa**: 160 niveles totales (80 por mundo) con progresión pedagógica adaptativa, desafíos cronometrados (`Speed Challenge`) y piano inteligente integrado.
+- **🎮 Gamificación Educativa**: 160 niveles totales (80 por mundo) con progresión pedagógica adaptativa, minijuego de velocidad (`Speed Challenge`) y piano inteligente integrado.
 - **👥 Gestión de Roles**: Panel de control exclusivo para el **Guardián** y una interfaz de aventura simplificada y optimizada para el **Jugador**.
 - **💻 Interfaz Optimizada**: Diseño premium de pantalla completa sin scroll, optimizado específicamente para resoluciones de portátiles como MacBook Pro 13".
 - **⚡ Interactividad en Tiempo Real**: Construido con **Livewire** y **Alpine.js** para una experiencia de usuario fluida y reactiva sin recargas de página.

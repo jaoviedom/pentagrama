@@ -48,10 +48,6 @@ Route::middleware('auth')->group(function () {
         return view('game.lesson', ['world' => $world, 'level' => $level]);
     })->name('game.lesson');
 
-    Route::get('/challenge/{world}', function ($world) {
-        return view('game.challenge', ['world' => $world]);
-    })->name('game.challenge');
-
     Route::get('/speed-challenge/{world}', function ($world) {
         return view('game.speed-challenge', ['world' => $world]);
     })->name('game.speed-challenge');

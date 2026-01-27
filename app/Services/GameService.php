@@ -235,14 +235,30 @@ class GameService
         $sequenceLength = 10;
 
         $sequence = [];
+        $lastNote = null;
+        $secondToLastNote = null;
+
         for ($i = 0; $i < $sequenceLength; $i++) {
-            $note = $availableNotes[array_rand($availableNotes)];
+            // Filtrar notas para evitar que se repitan más de 2 veces seguidas
+            $possibleNotes = $availableNotes;
+            if ($lastNote !== null && $lastNote === $secondToLastNote) {
+                $possibleNotes = array_values(array_filter($availableNotes, fn($n) => $n !== $lastNote));
+            }
+
+            // Si por alguna razón nos quedamos sin notas (no debería pasar), usamos las originales
+            $source = !empty($possibleNotes) ? $possibleNotes : $availableNotes;
+            $note = $source[array_rand($source)];
+
             $sequence[] = [
                 'pitch' => $note,
                 'highlighted' => false,
                 'status' => 'pending',
-                'hidden' => ($level > 30 && $level <= 60) // Niveles 31-60: el reto es ubicar la nota sin verla (en 61-80 se ven)
+                'hidden' => ($level > 30 && $level <= 60)
             ];
+
+            // Actualizar historial de notas
+            $secondToLastNote = $lastNote;
+            $lastNote = $note;
         }
 
         return $sequence;
